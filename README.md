@@ -1,3 +1,3 @@
 # Babylon.rs
 
-WebAssembly wrapper for Babylon.js
+WebAssembly wrapper for [Babylon.js](https://www.babylonjs.com/)
