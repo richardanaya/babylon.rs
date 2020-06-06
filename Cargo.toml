@@ -1,0 +1,13 @@
+[package]
+name = "babylon"
+version = "0.0.0"
+authors = ["Richard Anaya"]
+edition = "2018"
+description = "A wrapper for Babylon.js"
+license = "MIT OR Apache-2.0"
+categories = ["wasm"]
+repository = "https://github.com/richardanaya/babylon"
+readme="README.md"
+
+[dependencies]
+js_ffi = "0"
