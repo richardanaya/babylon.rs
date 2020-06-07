@@ -42,16 +42,12 @@ impl Game {
             shape: None,
         }
     }
-
-    fn init(&mut self) {
-        self.shape = Some(Sphere::create_sphere(&self.scene, 1.0));
-    }
 }
 
 #[no_mangle]
 pub fn main() {
     let mut game = GAME.lock().unwrap();
-    game.init();
+    game.shape = Some(Sphere::create_sphere(&self.scene, 1.0));
 }
 ```
 
