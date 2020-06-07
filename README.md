@@ -19,7 +19,7 @@ This project uses [`js_ffi`](https://github.com/richardanaya/js_ffi) for javascr
 </p>
 
 ```rust
-use babylon::*;
+use babylon::prelude::*;
 #[macro_use]
 extern crate lazy_static;
 use std::sync::Mutex;

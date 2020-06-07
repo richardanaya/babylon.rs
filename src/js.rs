@@ -1,15 +1,15 @@
 pub fn log(msg: &str) {
-    crate::BabylonApi::log(msg);
+    crate::api::BabylonApi::log(msg);
 }
 
 pub fn error(msg: &str) {
-    crate::BabylonApi::error(msg);
+    crate::api::BabylonApi::error(msg);
 }
 
 pub fn debugger() {
-    crate::BabylonApi::debugger();
+    crate::api::BabylonApi::debugger();
 }
 
 pub fn random() -> f32 {
-    crate::BabylonApi::random()
+    crate::api::BabylonApi::random()
 }
