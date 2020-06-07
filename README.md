@@ -8,6 +8,10 @@ This project uses [`js_ffi`](https://github.com/richardanaya/js_ffi) for binding
 
 # HelloWorld
 
+<p align="center">
+  <img width="460" height="300" src="https://richardanaya.github.io/babylon.rs/images/demo_0.png">
+</p>
+
 ```rust
 use babylon::*;
 
