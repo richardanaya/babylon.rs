@@ -21,22 +21,13 @@ This project uses [`js_ffi`](https://github.com/richardanaya/js_ffi) for binding
 ```rust
 use babylon::*;
 
-#[macro_use]
-extern crate lazy_static;
-
-use std::sync::Mutex;
-
-lazy_static! {
-    static ref GAME: Mutex<Game> = Mutex::new(Game::new());
-}
-
 struct Game {
     scene: Scene,
     shape: Option<Sphere>,
 }
 
-impl Game {
-    fn new() -> Game {
+impl Default for Game {
+    fn default() -> Self {
         Game {
             scene: Scene::create_from_basic_engine("#renderCanvas"),
             shape: None,
@@ -46,7 +37,7 @@ impl Game {
 
 #[no_mangle]
 pub fn main() {
-    let mut game = GAME.lock().unwrap();
+    let mut game = globals::<Game>::get();
     game.shape = Some(Sphere::create_sphere(&self.scene, 1.0));
 }
 ```
