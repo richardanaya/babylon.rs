@@ -8,8 +8,7 @@ edition = "2018"
 
 [dependencies]
 babylon = {path="../../"}
-lazy_static = "1.4"
-globals = "1"
+lazy_static = "1.4.0"
 
 [lib]
 crate-type =["cdylib"]

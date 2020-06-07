@@ -10,7 +10,7 @@ This project is pre-alpha and the api is in active exploration. Current prioriti
 * get a camera
 * get some sort of interaction
 
-This project uses [`js_ffi`](https://github.com/richardanaya/js_ffi) for javascript binding and [`globals`](https://github.com/richardanaya/globals) for global static singletons fairly extensively.
+This project uses [`js_ffi`](https://github.com/richardanaya/js_ffi) for javascript binding and [`lazy_static`](https://github.com/rust-lang-nursery/lazy-static.rs) for global static singletons fairly extensively.
 
 # HelloWorld
 
@@ -20,31 +20,45 @@ This project uses [`js_ffi`](https://github.com/richardanaya/js_ffi) for javascr
 
 ```rust
 use babylon::*;
+#[macro_use]
+extern crate lazy_static;
+use std::sync::Mutex;
+
+lazy_static! {
+    static ref GAME: Mutex<Game> = Mutex::new(Game::default());
+}
 
 struct Game {
     scene: Scene,
-    shape: Option<Sphere>,
+    shape: Vec<Sphere>,
 }
 
 impl Default for Game {
     fn default() -> Self {
+        babylon::js::log("hey2");
         Game {
             scene: Scene::create_from_basic_engine("#renderCanvas"),
-            shape: None,
+            shape: vec![],
         }
     }
 }
 
 #[no_mangle]
 pub fn main() {
-    // lock mutex of global static singleton of our Game
-    let mut game = globals::get::<Game>();
-    // create a new Sphere and move it into Game so it doesn't drop and disappear
-    game.shape = Some(Sphere::create_sphere(&game.scene, 1.0));
+    let mut game = GAME.lock().unwrap();
+    for _ in 0..10 {
+        let mut sphere = Sphere::create_sphere(&game.scene, babylon::js::random());
+        sphere.set_position(
+            babylon::js::random(),
+            babylon::js::random(),
+            -babylon::js::random(),
+        );
+        game.shape.push(sphere);
+    }
 }
 ```
 
-See this demo [here](https://richardanaya.github.io/babylon.rs/examples/helloworld/index.html)
+See this demo [here](https://richardanaya.github.io/babylon.rs/examples/helloworld/index.html) ( be sure to play with arrow keys :arrow_left: :arrow_up: :arrow_down: :arrow_right:!)
 
 
 # License
