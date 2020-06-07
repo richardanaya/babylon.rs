@@ -8,6 +8,7 @@ pub struct BabylonApi {
     fn_create_basic_scene: JSInvoker,
     fn_create_sphere: JSInvoker,
     fn_dispose_mesh: JSInvoker,
+    fn_set_position: JSInvoker,
 }
 
 impl Default for BabylonApi {
@@ -99,6 +100,12 @@ impl Default for BabylonApi {
                 r#"
                 function(){
                     return Math.random()
+            "#,
+            ),
+            fn_set_position: register_function(
+                r#"
+                function(mesh,x,y,z){
+                    mesh.position = new BABYLON.Vector3(x,y,z)
                 }
             "#,
             ),
@@ -114,20 +121,22 @@ impl BabylonApi {
 
     pub fn create_sphere(scene_ref: &JSObject, size: f32) -> JSObject {
         let api = globals::get::<BabylonApi>();
-        api.fn_create_sphere.invoke_2(scene_ref, size).to_js_object()
+        api.fn_create_sphere
+            .invoke_2(scene_ref, size)
+            .to_js_object()
     }
 
-    pub fn dispose_mesh(mesh: &JSObject,) {
+    pub fn dispose_mesh(mesh: &JSObject) {
         let api = globals::get::<BabylonApi>();
         api.fn_dispose_mesh.invoke_1(mesh);
     }
 
-    pub fn log(msg:&str) {
+    pub fn log(msg: &str) {
         let api = globals::get::<BabylonApi>();
         api.fn_log.invoke_1(msg);
     }
 
-    pub fn error(msg:&str) {
+    pub fn error(msg: &str) {
         let api = globals::get::<BabylonApi>();
         api.fn_error.invoke_1(msg);
     }
@@ -140,5 +149,10 @@ impl BabylonApi {
     pub fn random() -> f32 {
         let api = globals::get::<BabylonApi>();
         api.fn_random.invoke_0() as f32
+    }
+
+    pub fn set_position(mesh: &JSObject, x: f32, y: f32, z: f32) -> JSObject {
+        let api = globals::get::<BabylonApi>();
+        api.fn_set_position.invoke_4(mesh, x, y, z).to_js_object()
     }
 }

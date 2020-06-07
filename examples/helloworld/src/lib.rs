@@ -17,5 +17,7 @@ impl Default for Game {
 #[no_mangle]
 pub fn main() {
     let mut game = globals::get::<Game>();
-    game.shape = Some(Sphere::create_sphere(&game.scene, 1.0));
+    //let mut sphere = Sphere::create_sphere(&game.scene, 1.0);
+    //sphere.set_position(0.0,1.0,0.0);
+    //game.shape = Some(sphere);
 }
