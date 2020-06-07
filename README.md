@@ -100,6 +100,8 @@ See this demo [here](https://richardanaya.github.io/babylon.rs/examples/material
 * [Timer](https://richardanaya.github.io/babylon.rs/examples/timer/index.html)
 * [Keyboard](https://richardanaya.github.io/babylon.rs/examples/keyboard/index.html)
 
+* [Pong](https://richardanaya.github.io/babylon.rs/examples/pong/index.html)
+
 # License
 
 This project is licensed under either of
