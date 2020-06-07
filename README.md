@@ -63,7 +63,37 @@ pub fn main() {
 }
 ```
 
-See this demo [here](https://richardanaya.github.io/babylon.rs/examples/helloworld/index.html) ( be sure to play with arrow keys :arrow_left: :arrow_up: :arrow_down: :arrow_right:!)
+See this demo [here](https://richardanaya.github.io/babylon.rs/examples/helloworld/index.html) ( be sure to play with mouse and arrow keys :arrow_left: :arrow_up: :arrow_down: :arrow_right:!)
+
+# Materials
+
+<p align="center">
+  <img src="https://richardanaya.github.io/babylon.rs/images/demo_1.png">
+</p>
+
+```rust
+let mut game = GAME.lock().unwrap();
+for _ in 0..10 {
+    let mut cube = Cube::new(
+        &game.scene,
+        babylon::js::random(),
+        babylon::js::random(),
+        babylon::js::random(),
+    );
+    let mut mat = StandardMaterial::new(&game.scene);
+    mat.set_diffuse_color(Color::new(babylon::js::random(),babylon::js::random(),babylon::js::random()));
+    mat.set_alpha(babylon::js::random());
+    cube.set_material(&mat);
+    cube.set_position(
+        babylon::js::random() - 0.5,
+        babylon::js::random() - 0.5,
+        babylon::js::random() - 0.5,
+    );
+    game.shape.push(cube);
+}
+```
+
+See this demo [here](https://richardanaya.github.io/babylon.rs/examples/materials/index.html) ( be sure to play with mouse and arrow keys :arrow_left: :arrow_up: :arrow_down: :arrow_right:!)
 
 
 # License
