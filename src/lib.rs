@@ -8,3 +8,5 @@ pub mod materials;
 pub mod math;
 pub mod prelude;
 pub mod shapes;
+pub mod lights;
+pub mod cameras;

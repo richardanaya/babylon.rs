@@ -7,6 +7,11 @@ pub struct Scene {
 }
 
 impl Scene {
+    pub fn new(selector: &str) -> Scene {
+        let scene_ref = BabylonApi::create_scene(selector);
+        Scene { scene_ref }
+    }
+
     pub fn create_from_basic_engine(selector: &str) -> Scene {
         let scene_ref = BabylonApi::create_basic_scene(selector);
         Scene { scene_ref }

@@ -7,6 +7,7 @@ pub struct BabylonApi {
     fn_debug: JSInvoker,
     fn_random: JSInvoker,
     fn_create_basic_scene: JSInvoker,
+    fn_create_scene: JSInvoker,
     fn_create_sphere: JSInvoker,
     fn_create_cube: JSInvoker,
     fn_create_standard_material: JSInvoker,
@@ -21,6 +22,9 @@ pub struct BabylonApi {
     fn_add_keyboard_observable: JSInvoker,
     fn_add_observable: JSInvoker,
     fn_get_delta_time: JSInvoker,
+    fn_create_arc_rotate_camera: JSInvoker,
+    fn_create_hemispheric_light: JSInvoker,
+    fn_create_point_light: JSInvoker,
 }
 
 impl Default for BabylonApi {
@@ -46,17 +50,28 @@ impl Default for BabylonApi {
                         camera.attachControl(canvas, true);
     
                         // Add lights to the scene
-                        var light1 = new BABYLON.HemisphericLight(
-                            "light1",
-                            new BABYLON.Vector3(1, 1, 0),
-                            scene
-                        );
-                        var light2 = new BABYLON.PointLight(
-                            "light2",
-                            new BABYLON.Vector3(0, 1, -1),
-                            scene
-                        );
+                        
     
+                        return scene;
+                    };
+                    var scene = createScene();
+                    engine.runRenderLoop(function () {
+                            scene.render();
+                    });
+                    window.addEventListener("resize", function () {
+                            engine.resize();
+                    });
+                    return scene;
+                }
+            "#,
+            ),
+            fn_create_scene: register_function(
+                r#"
+                function(selector){
+                    var canvas = document.querySelector(selector);
+                    var engine = new BABYLON.Engine(canvas, true); 
+                    var createScene = function () {
+                        var scene = new BABYLON.Scene(engine);
                         return scene;
                     };
                     var scene = createScene();
@@ -206,6 +221,45 @@ impl Default for BabylonApi {
                 }
             "#,
             ),
+            fn_create_arc_rotate_camera: register_function(
+                r#"
+                function(scene){
+                    var camera = new BABYLON.ArcRotateCamera(
+                        "Camera",
+                        Math.PI / 2,
+                        Math.PI / 2,
+                        2,
+                        BABYLON.Vector3.Zero(),
+                        scene
+                    );
+                    return camera;
+                }
+            "#,
+            ),
+            fn_create_hemispheric_light: register_function(
+                r#"
+                function(scene){
+                    var light = new BABYLON.HemisphericLight(
+                        null,
+                        new BABYLON.Vector3(1, 1, 0),
+                        scene
+                    );
+                    return light;
+                }
+            "#,
+            ),
+            fn_create_point_light: register_function(
+                r#"
+                function(scene){
+                    var light = new BABYLON.PointLight(
+                        null,
+                        new BABYLON.Vector3(0, 1, -1),
+                        scene
+                    );
+                    return light;
+                }
+            "#,
+            ),
         }
     }
 }
@@ -215,7 +269,10 @@ impl BabylonApi {
         let api = globals::get::<BabylonApi>();
         api.fn_create_basic_scene.invoke_1(selector).to_js_object()
     }
-
+    pub fn create_scene(selector: &str) -> JSObject {
+        let api = globals::get::<BabylonApi>();
+        api.fn_create_scene.invoke_1(selector).to_js_object()
+    }
     pub fn create_sphere(scene_ref: &JSObject, size: f32) -> JSObject {
         let api = globals::get::<BabylonApi>();
         api.fn_create_sphere
@@ -319,5 +376,26 @@ impl BabylonApi {
     pub fn get_delta_time(scene: &JSObject) -> f64 {
         let api = globals::get::<BabylonApi>();
         api.fn_get_delta_time.invoke_1(scene)
+    }
+
+    pub fn create_arc_rotate_camera(scene: &JSObject) -> JSObject {
+        let api = globals::get::<BabylonApi>();
+        api.fn_create_arc_rotate_camera
+            .invoke_1(scene)
+            .to_js_object()
+    }
+
+    pub fn create_hemispheric_light(scene: &JSObject) -> JSObject {
+        let api = globals::get::<BabylonApi>();
+        api.fn_create_hemispheric_light
+            .invoke_1(scene)
+            .to_js_object()
+    }
+
+    pub fn create_point_light(scene: &JSObject) -> JSObject {
+        let api = globals::get::<BabylonApi>();
+        api.fn_create_point_light
+            .invoke_1(scene)
+            .to_js_object()
     }
 }
