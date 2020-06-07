@@ -100,6 +100,7 @@ impl Default for BabylonApi {
                 r#"
                 function(){
                     return Math.random()
+                }
             "#,
             ),
             fn_set_position: register_function(
