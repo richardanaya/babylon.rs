@@ -4,7 +4,7 @@ extern crate lazy_static;
 use std::sync::Mutex;
 
 lazy_static! {
-    static ref GAME: Mutex<Game> = Mutex::new(Game::default());
+    static ref GAME: Mutex<Game> = Mutex::new(Game::new());
 }
 
 struct Game {
@@ -12,9 +12,8 @@ struct Game {
     shape: Vec<Sphere>,
 }
 
-impl Default for Game {
-    fn default() -> Self {
-        babylon::js::log("hey2");
+impl Game {
+    fn new() -> Self {
         Game {
             scene: Scene::create_from_basic_engine("#renderCanvas"),
             shape: vec![],
@@ -24,6 +23,7 @@ impl Default for Game {
 
 #[no_mangle]
 pub fn main() {
+    babylon::js::log("Starting demo...");
     let mut game = GAME.lock().unwrap();
     for _ in 0..10 {
         let mut sphere = Sphere::create_sphere(&game.scene, babylon::js::random());
