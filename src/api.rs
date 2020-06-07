@@ -1,3 +1,4 @@
+use alloc::boxed::Box;
 use js_ffi::*;
 
 pub struct BabylonApi {
@@ -17,6 +18,9 @@ pub struct BabylonApi {
     fn_set_specular_color: JSInvoker,
     fn_set_ambient_color: JSInvoker,
     fn_set_alpha: JSInvoker,
+    fn_add_keyboard_observable: JSInvoker,
+    fn_add_observable: JSInvoker,
+    fn_get_delta_time: JSInvoker,
 }
 
 impl Default for BabylonApi {
@@ -177,6 +181,31 @@ impl Default for BabylonApi {
                 }
             "#,
             ),
+            fn_add_keyboard_observable: register_function(
+                r#"
+                function(scene,cb){
+                    scene.onKeyboardObservable.add((kbInfo) => {
+                        cb(kbInfo.type,kbInfo.event.keyCode)
+                    });
+                }
+            "#,
+            ),
+            fn_add_observable: register_function(
+                r#"
+                function(scene,name,cb){
+                    scene[name].add(() => {
+                        cb()
+                    });
+                }
+            "#,
+            ),
+            fn_get_delta_time: register_function(
+                r#"
+                function(scene){
+                    return scene.getEngine().getDeltaTime();
+                }
+            "#,
+            ),
         }
     }
 }
@@ -240,31 +269,56 @@ impl BabylonApi {
 
     pub fn set_material(mesh: &JSObject, mat: &JSObject) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_material.invoke_2(mesh,mat);
+        api.fn_set_material.invoke_2(mesh, mat);
     }
 
-    pub fn set_emmisive_color(mat: &JSObject, r:f32, g:f32, b:f32) {
+    pub fn set_emmisive_color(mat: &JSObject, r: f32, g: f32, b: f32) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_emmisive_color.invoke_4(mat,r,g,b);
+        api.fn_set_emmisive_color.invoke_4(mat, r, g, b);
     }
 
-    pub fn set_diffuse_color(mat: &JSObject, r:f32, g:f32, b:f32) {
+    pub fn set_diffuse_color(mat: &JSObject, r: f32, g: f32, b: f32) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_diffuse_color.invoke_4(mat,r,g,b);
+        api.fn_set_diffuse_color.invoke_4(mat, r, g, b);
     }
 
-    pub fn set_specular_color(mat: &JSObject, r:f32, g:f32, b:f32) {
+    pub fn set_specular_color(mat: &JSObject, r: f32, g: f32, b: f32) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_specular_color.invoke_4(mat,r,g,b);
+        api.fn_set_specular_color.invoke_4(mat, r, g, b);
     }
 
-    pub fn set_ambient_color(mat: &JSObject, r:f32, g:f32, b:f32) {
+    pub fn set_ambient_color(mat: &JSObject, r: f32, g: f32, b: f32) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_ambient_color.invoke_4(mat,r,g,b);
+        api.fn_set_ambient_color.invoke_4(mat, r, g, b);
     }
 
-    pub fn set_alpha(mat: &JSObject, a:f32) {
+    pub fn set_alpha(mat: &JSObject, a: f32) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_alpha.invoke_2(mat,a);
+        api.fn_set_alpha.invoke_2(mat, a);
     }
+
+    pub fn add_keyboard_observable(
+        scene: &JSObject,
+        callback: Box<dyn FnMut(JSValue, JSValue) -> () + Send>,
+    ) {
+        let cb = create_callback_2(callback);
+        let api = globals::get::<BabylonApi>();
+        api.fn_add_keyboard_observable.invoke_2(scene, cb);
+    }
+
+    pub fn add_observable(
+        scene: &JSObject,
+        observable_name:&str,
+        callback: Box<dyn FnMut() -> () + Send>,
+    ) {
+        let cb = create_callback_0(callback);
+        let api = globals::get::<BabylonApi>();
+        api.fn_add_observable.invoke_3(scene, observable_name, cb);
+    }
+
+    pub fn get_delta_time(scene: &JSObject) -> f64 {
+        let api = globals::get::<BabylonApi>();
+        api.fn_get_delta_time.invoke_1(scene)
+    }
+
 }

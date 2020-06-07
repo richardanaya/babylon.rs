@@ -16,10 +16,7 @@ pub fn random() -> f32 {
     crate::api::BabylonApi::random()
 }
 
-pub fn set_interval(
-    callback: Box<dyn FnMut() -> () + Send>,
-    milliseconds: u32
-) {
+pub fn set_interval(callback: Box<dyn FnMut() -> () + Send>, milliseconds: u32) {
     let timer_api = web_timer::Timer::default();
-    timer_api.set_interval(callback,milliseconds);
+    timer_api.set_interval(callback, milliseconds);
 }

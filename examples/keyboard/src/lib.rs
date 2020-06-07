@@ -8,7 +8,6 @@ lazy_static! {
 }
 
 struct Game {
-    time: f64,
     scene: Scene,
     shape: Vec<Sphere>,
 }
@@ -18,7 +17,6 @@ impl Game {
         Game {
             scene: Scene::create_from_basic_engine("#renderCanvas"),
             shape: vec![],
-            time: 0.0,
         }
     }
 }
@@ -26,13 +24,10 @@ impl Game {
 #[no_mangle]
 pub fn main() {
     let game = GAME.lock().unwrap();
-    game.scene.add_before_render_observable(|| {
-        let mut game = GAME.lock().unwrap();
-        let delta_time = game.scene.get_delta_time();
-        game.time += delta_time;
-        if game.time > 1000.0 {
-            game.time -= 1000.0;
-            // add sphere every second
+    game.scene.add_keyboard_observable(|event_type, key_code| {
+        if event_type == KEYUP {
+            babylon::js::log(&format!("{} {}", event_type, key_code));
+            let mut game = GAME.lock().unwrap();
             let mut sphere = Sphere::new(&game.scene, babylon::js::random());
             sphere.set_position(
                 babylon::js::random() - 0.5,
