@@ -27,7 +27,11 @@ impl Scene {
     where
         T: 'static + FnMut() -> () + Send,
     {
-        BabylonApi::add_observable(&self.scene_ref,"onBeforeRenderObservable",Box::new(callback));
+        BabylonApi::add_observable(
+            &self.scene_ref,
+            "onBeforeRenderObservable",
+            Box::new(callback),
+        );
     }
 
     pub fn get_delta_time(&self) -> f64 {

@@ -308,7 +308,7 @@ impl BabylonApi {
 
     pub fn add_observable(
         scene: &JSObject,
-        observable_name:&str,
+        observable_name: &str,
         callback: Box<dyn FnMut() -> () + Send>,
     ) {
         let cb = create_callback_0(callback);
@@ -320,5 +320,4 @@ impl BabylonApi {
         let api = globals::get::<BabylonApi>();
         api.fn_get_delta_time.invoke_1(scene)
     }
-
 }
