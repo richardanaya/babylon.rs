@@ -1,6 +1,7 @@
 use crate::api::BabylonApi;
 use crate::core::*;
 use crate::math::*;
+use crate::materials::*;
 use js_ffi::*;
 
 pub struct Sphere {
@@ -21,6 +22,10 @@ impl Sphere {
         self.position.y = y;
         self.position.z = z;
         BabylonApi::set_position(&mut self.js_ref, x, y, z);
+    }
+
+    pub fn set_material<T>(&mut self, mat:&T) where T:Material {
+        BabylonApi::set_material(&mut self.js_ref, mat.get_js_ref());
     }
 }
 
@@ -49,6 +54,10 @@ impl Cube {
         self.position.y = y;
         self.position.z = z;
         BabylonApi::set_position(&mut self.js_ref, x, y, z);
+    }
+
+    pub fn set_material<T>(&mut self, mat:&T) where T:Material {
+        BabylonApi::set_material(&mut self.js_ref, mat.get_js_ref());
     }
 }
 

@@ -8,8 +8,15 @@ pub struct BabylonApi {
     fn_create_basic_scene: JSInvoker,
     fn_create_sphere: JSInvoker,
     fn_create_cube: JSInvoker,
+    fn_create_standard_material: JSInvoker,
     fn_dispose_mesh: JSInvoker,
     fn_set_position: JSInvoker,
+    fn_set_material: JSInvoker,
+    fn_set_emmisive_color: JSInvoker,
+    fn_set_diffuse_color: JSInvoker,
+    fn_set_specular_color: JSInvoker,
+    fn_set_ambient_color: JSInvoker,
+    fn_set_alpha: JSInvoker,
 }
 
 impl Default for BabylonApi {
@@ -79,6 +86,13 @@ impl Default for BabylonApi {
                 }
             "#,
             ),
+            fn_create_standard_material: register_function(
+                r#"
+                function(scene){
+                    return new BABYLON.StandardMaterial(null, scene);
+                }
+            "#,
+            ),
             fn_dispose_mesh: register_function(
                 r#"
                 function(mesh){
@@ -89,14 +103,14 @@ impl Default for BabylonApi {
             fn_log: register_function(
                 r#"
                 function(msg){
-                    console.log(msg)
+                    console.log(msg);
                 }
             "#,
             ),
             fn_error: register_function(
                 r#"
                 function(msg){
-                    console.error(msg)
+                    console.error(msg);
                 }
             "#,
             ),
@@ -110,14 +124,56 @@ impl Default for BabylonApi {
             fn_random: register_function(
                 r#"
                 function(){
-                    return Math.random()
+                    return Math.random();
                 }
             "#,
             ),
             fn_set_position: register_function(
                 r#"
                 function(mesh,x,y,z){
-                    mesh.position = new BABYLON.Vector3(x,y,z)
+                    mesh.position = new BABYLON.Vector3(x,y,z);
+                }
+            "#,
+            ),
+            fn_set_material: register_function(
+                r#"
+                function(mesh,mat){
+                    mesh.material = mat;
+                }
+            "#,
+            ),
+            fn_set_emmisive_color: register_function(
+                r#"
+                function(mat,r,g,b){
+                    mat.emissiveColor = new BABYLON.Color3(r, g, b);
+                }
+            "#,
+            ),
+            fn_set_diffuse_color: register_function(
+                r#"
+                function(mat,r,g,b){
+                    mat.diffuseColor = new BABYLON.Color3(r, g, b);
+                }
+            "#,
+            ),
+            fn_set_specular_color: register_function(
+                r#"
+                function(mat,r,g,b){
+                    mat.specularColor = new BABYLON.Color3(r, g, b);
+                }
+            "#,
+            ),
+            fn_set_ambient_color: register_function(
+                r#"
+                function(mat,r,g,b){
+                    mat.ambientColor = new BABYLON.Color3(r, g, b);
+                }
+            "#,
+            ),
+            fn_set_alpha: register_function(
+                r#"
+                function(mat,a){
+                    mat.alpha = a;
                 }
             "#,
             ),
@@ -142,6 +198,13 @@ impl BabylonApi {
         let api = globals::get::<BabylonApi>();
         api.fn_create_cube
             .invoke_4(scene_ref, width, height, depth)
+            .to_js_object()
+    }
+
+    pub fn create_standard_material(scene_ref: &JSObject) -> JSObject {
+        let api = globals::get::<BabylonApi>();
+        api.fn_create_standard_material
+            .invoke_1(scene_ref)
             .to_js_object()
     }
 
@@ -170,8 +233,38 @@ impl BabylonApi {
         api.fn_random.invoke_0() as f32
     }
 
-    pub fn set_position(mesh: &JSObject, x: f32, y: f32, z: f32) -> JSObject {
+    pub fn set_position(mesh: &JSObject, x: f32, y: f32, z: f32) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_position.invoke_4(mesh, x, y, z).to_js_object()
+        api.fn_set_position.invoke_4(mesh, x, y, z);
+    }
+
+    pub fn set_material(mesh: &JSObject, mat: &JSObject) {
+        let api = globals::get::<BabylonApi>();
+        api.fn_set_material.invoke_2(mesh,mat);
+    }
+
+    pub fn set_emmisive_color(mat: &JSObject, r:f32, g:f32, b:f32) {
+        let api = globals::get::<BabylonApi>();
+        api.fn_set_emmisive_color.invoke_4(mat,r,g,b);
+    }
+
+    pub fn set_diffuse_color(mat: &JSObject, r:f32, g:f32, b:f32) {
+        let api = globals::get::<BabylonApi>();
+        api.fn_set_diffuse_color.invoke_4(mat,r,g,b);
+    }
+
+    pub fn set_specular_color(mat: &JSObject, r:f32, g:f32, b:f32) {
+        let api = globals::get::<BabylonApi>();
+        api.fn_set_specular_color.invoke_4(mat,r,g,b);
+    }
+
+    pub fn set_ambient_color(mat: &JSObject, r:f32, g:f32, b:f32) {
+        let api = globals::get::<BabylonApi>();
+        api.fn_set_ambient_color.invoke_4(mat,r,g,b);
+    }
+
+    pub fn set_alpha(mat: &JSObject, a:f32) {
+        let api = globals::get::<BabylonApi>();
+        api.fn_set_alpha.invoke_2(mat,a);
     }
 }

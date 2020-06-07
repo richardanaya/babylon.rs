@@ -26,12 +26,21 @@ pub fn main() {
     babylon::js::log("Starting demo...");
     let mut game = GAME.lock().unwrap();
     for _ in 0..10 {
-        let mut sphere = Sphere::new(&game.scene, babylon::js::random());
-        sphere.set_position(
+        let mut cube = Cube::new(
+            &game.scene,
+            babylon::js::random(),
+            babylon::js::random(),
+            babylon::js::random(),
+        );
+        let mut mat = StandardMaterial::new(&game.scene);
+        mat.set_diffuse_color(Color::new(babylon::js::random(),babylon::js::random(),babylon::js::random()));
+        mat.set_alpha(babylon::js::random());
+        cube.set_material(&mat);
+        cube.set_position(
             babylon::js::random() - 0.5,
             babylon::js::random() - 0.5,
             babylon::js::random() - 0.5,
         );
-        game.shape.push(sphere);
+        game.shape.push(cube);
     }
 }
