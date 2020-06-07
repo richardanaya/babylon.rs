@@ -3,6 +3,7 @@ use js_ffi::*;
 pub struct BabylonApi {
     fn_create_basic_scene: JSInvoker,
     fn_create_sphere: JSInvoker,
+    fn_dispose_mesh: JSInvoker,
 }
 
 impl Default for BabylonApi {
@@ -55,11 +56,17 @@ impl Default for BabylonApi {
             fn_create_sphere: register_function(
                 r#"
                 function(scene,size){
-                    debugger;
                     return BABYLON.MeshBuilder.CreateSphere(
                         "sphere",
                         { diameter: size },
                         scene);
+                }
+            "#,
+            ),
+            fn_dispose_mesh: register_function(
+                r#"
+                function(mesh){
+                    mesh.dispose()
                 }
             "#,
             ),
@@ -76,5 +83,10 @@ impl BabylonApi {
     pub fn create_sphere(scene_ref: &JSObject, size: f32) -> JSObject {
         let api = globals::get::<BabylonApi>();
         api.fn_create_sphere.invoke_2(scene_ref, size).as_owned()
+    }
+
+    pub fn dispose_mesh(mesh: &JSObject,) -> JSObject {
+        let api = globals::get::<BabylonApi>();
+        api.fn_dispose_mesh.invoke_1(mesh).as_owned()
     }
 }

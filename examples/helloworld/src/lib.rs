@@ -24,6 +24,7 @@ impl Game {
 
     fn init(&mut self) {
         self.shape = Some(Sphere::create_sphere(&self.scene, 1.0));
+        Sphere::create_sphere(&self.scene, 2.0);
     }
 }
 
