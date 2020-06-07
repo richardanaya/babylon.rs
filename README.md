@@ -25,7 +25,7 @@ extern crate lazy_static;
 use std::sync::Mutex;
 
 lazy_static! {
-    static ref GAME: Mutex<Game> = Mutex::new(Game::default());
+    static ref GAME: Mutex<Game> = Mutex::new(Game::new());
 }
 
 struct Game {
