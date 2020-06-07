@@ -62,7 +62,7 @@ impl Default for BabylonApi {
                 r#"
                 function(scene,size){
                     return BABYLON.MeshBuilder.CreateSphere(
-                        "sphere",
+                        null,
                         { diameter: size },
                         scene);
                 }

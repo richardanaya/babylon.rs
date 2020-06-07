@@ -9,7 +9,7 @@ pub struct Sphere {
 }
 
 impl Sphere {
-    pub fn create_sphere(scene: &Scene, size: f32) -> Sphere {
+    pub fn new(scene: &Scene, size: f32) -> Sphere {
         Sphere {
             position: Vector3::new(0.0, 0.0, 0.0),
             sphere_ref: BabylonApi::create_sphere(scene.get_js_ref(), size),
