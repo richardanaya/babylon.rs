@@ -95,6 +95,10 @@ for _ in 0..10 {
 
 See this demo [here](https://richardanaya.github.io/babylon.rs/examples/materials/index.html) ( be sure to play with mouse and arrow keys :arrow_left: :arrow_up: :arrow_down: :arrow_right:!)
 
+# Other Demos
+
+* [Timer](https://richardanaya.github.io/babylon.rs/examples/timer/index.html)
+* [Keyboard](https://richardanaya.github.io/babylon.rs/examples/keyboard/index.html)
 
 # License
 
