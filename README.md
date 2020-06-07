@@ -38,9 +38,9 @@ impl Default for Game {
 #[no_mangle]
 pub fn main() {
     // lock mutex of global static singleton of our Game
-    let mut game = globals::<Game>::get();
+    let mut game = globals::get::<Game>();
     // create a new Sphere and move it into Game so it doesn't drop and disappear
-    game.shape = Some(Sphere::create_sphere(&self.scene, 1.0));
+    game.shape = Some(Sphere::create_sphere(&game.scene, 1.0));
 }
 ```
 
