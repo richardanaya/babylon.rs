@@ -12,6 +12,11 @@ This project is pre-alpha and the api is in active exploration. Current prioriti
 
 This project uses [`js_ffi`](https://github.com/richardanaya/js_ffi) for javascript binding and [`lazy_static`](https://github.com/rust-lang-nursery/lazy-static.rs) for global static singletons fairly extensively.
 
+# Idioms
+* Scenes hold 3D objects
+* Materials determine how a 3D object looks
+* When an 3D object drops it's removed from the scene
+
 # HelloWorld
 
 <p align="center">
