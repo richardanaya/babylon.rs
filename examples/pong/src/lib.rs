@@ -9,7 +9,6 @@ lazy_static! {
 
 struct Game {
     scene: Scene,
-    shape: Vec<Sphere>,
     camera: Camera,
     light_1: HemisphericLight,
     light_2: PointLight,
@@ -33,7 +32,6 @@ impl Game {
         Game {
             scene,
             camera,
-            shape: vec![],
             light_1,
             light_2,
             ball,
