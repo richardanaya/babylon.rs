@@ -1,3 +1,5 @@
+#![no_std]
+
 use crate::api::BabylonApi;
 
 pub use js_ffi::*;
