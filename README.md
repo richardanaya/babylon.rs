@@ -2,6 +2,8 @@
 
 WebAssembly wrapper for [Babylon.js](https://www.babylonjs.com/)
 
+This project uses [`js_ffi`](https://github.com/richardanaya/js_ffi) for binding.
+
 # HelloWorld
 
 ```rust

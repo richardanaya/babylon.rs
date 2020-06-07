@@ -24,7 +24,7 @@ impl Scene {
 
 impl Drop for Scene {
     fn drop(&mut self){
-        release_object(self.scene_ref.to_js_value())
+        release_object(&self.scene_ref)
     }
 }
 
@@ -40,6 +40,6 @@ impl Sphere {
 impl Drop for Sphere {
     fn drop(&mut self){
         BabylonApi::dispose_mesh(&mut self.sphere_ref);
-        release_object(self.sphere_ref.to_js_value())
+        release_object(&self.sphere_ref)
     }
 }

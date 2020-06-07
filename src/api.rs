@@ -77,16 +77,16 @@ impl Default for BabylonApi {
 impl BabylonApi {
     pub fn create_basic_scene(selector: &str) -> JSObject {
         let api = globals::get::<BabylonApi>();
-        api.fn_create_basic_scene.invoke_1(selector).as_owned()
+        api.fn_create_basic_scene.invoke_1(selector).to_js_object()
     }
 
     pub fn create_sphere(scene_ref: &JSObject, size: f32) -> JSObject {
         let api = globals::get::<BabylonApi>();
-        api.fn_create_sphere.invoke_2(scene_ref, size).as_owned()
+        api.fn_create_sphere.invoke_2(scene_ref, size).to_js_object()
     }
 
     pub fn dispose_mesh(mesh: &JSObject,) -> JSObject {
         let api = globals::get::<BabylonApi>();
-        api.fn_dispose_mesh.invoke_1(mesh).as_owned()
+        api.fn_dispose_mesh.invoke_1(mesh).to_js_object()
     }
 }

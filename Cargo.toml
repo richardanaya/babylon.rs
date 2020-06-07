@@ -1,6 +1,6 @@
 [package]
 name = "babylon"
-version = "0.0.1"
+version = "0.0.2"
 authors = ["Richard Anaya"]
 edition = "2018"
 description = "A wrapper for Babylon.js"
@@ -10,6 +10,6 @@ repository = "https://github.com/richardanaya/babylon"
 readme="README.md"
 
 [dependencies]
-js_ffi = "0"
-lazy_static = "1.4"
-globals = "1"
+js_ffi = "0.8.0"
+lazy_static = "1.4.0"
+globals = "1.0.1"
