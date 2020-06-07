@@ -21,9 +21,14 @@ impl Sphere {
         &self.position
     }
 
-    pub fn set_position(&mut self, p:Vector) {
+    pub fn set_position(&mut self, p: Vector) {
         self.position = p;
-        BabylonApi::set_position(&mut self.js_ref, self.position.x, self.position.y, self.position.z);
+        BabylonApi::set_position(
+            &mut self.js_ref,
+            self.position.x,
+            self.position.y,
+            self.position.z,
+        );
     }
 
     pub fn set_material<T>(&mut self, mat: &T)
@@ -47,8 +52,8 @@ pub struct Cube {
 }
 
 impl Cube {
-    pub fn new(scene: &Scene, width: f64, height: f64, depth: f64) -> Sphere {
-        Sphere {
+    pub fn new(scene: &Scene, width: f64, height: f64, depth: f64) -> Cube {
+        Cube {
             position: Vector3::new(0.0, 0.0, 0.0),
             js_ref: BabylonApi::create_cube(scene.get_js_ref(), width, height, depth),
         }
@@ -58,7 +63,7 @@ impl Cube {
         &self.position
     }
 
-    pub fn set_position(&mut self, p:Vector) {
+    pub fn set_position(&mut self, p: Vector) {
         self.position = p;
         BabylonApi::set_position(&mut self.js_ref, p.x, p.y, p.z);
     }

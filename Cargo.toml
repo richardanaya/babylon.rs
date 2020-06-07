@@ -1,6 +1,6 @@
 [package]
 name = "babylon"
-version = "0.0.10"
+version = "0.0.11"
 authors = ["Richard Anaya"]
 edition = "2018"
 description = "A wrapper for Babylon.js"

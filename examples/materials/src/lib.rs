@@ -9,7 +9,7 @@ lazy_static! {
 
 struct Game {
     scene: Scene,
-    shape: Vec<Sphere>,
+    shape: Vec<Cube>,
 }
 
 impl Game {
