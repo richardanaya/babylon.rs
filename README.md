@@ -10,7 +10,7 @@ This project is pre-alpha and the api is in active exploration. Current prioriti
 * get a camera
 * get some sort of interaction
 
-This project uses [`js_ffi`](https://github.com/richardanaya/js_ffi) for binding and [`globals`](https://github.com/richardanaya/globals) for global static singletons.
+This project uses [`js_ffi`](https://github.com/richardanaya/js_ffi) for javascript binding and [`globals`](https://github.com/richardanaya/globals) for global static singletons fairly extensively.
 
 # HelloWorld
 
