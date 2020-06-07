@@ -4,6 +4,12 @@
 
 WebAssembly wrapper for [Babylon.js](https://www.babylonjs.com/)
 
+This project is pre-alpha and the api is in active exploration. Current priorities:
+
+* get a basic GLTF up
+* get a camera
+* get some sort of interaction
+
 This project uses [`js_ffi`](https://github.com/richardanaya/js_ffi) for binding.
 
 # HelloWorld
