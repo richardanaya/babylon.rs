@@ -1,12 +1,6 @@
 use crate::api::BabylonApi;
 use js_ffi::*;
 
-pub struct Vector {
-    pub x: f32,
-    pub y: f32,
-    pub z: f32,
-}
-
 pub struct Scene {
     scene_ref: JSObject,
 }

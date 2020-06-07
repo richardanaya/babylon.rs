@@ -1,20 +1,17 @@
 use crate::api::BabylonApi;
 use crate::core::*;
+use crate::math::*;
 use js_ffi::*;
 
 pub struct Sphere {
-    position: Vector,
+    position: Vector3<f32>,
     sphere_ref: JSObject,
 }
 
 impl Sphere {
     pub fn create_sphere(scene: &Scene, size: f32) -> Sphere {
         Sphere {
-            position: Vector {
-                x: 0.0,
-                y: 0.0,
-                z: 0.0,
-            },
+            position: Vector3::new(0.0, 0.0, 0.0),
             sphere_ref: BabylonApi::create_sphere(scene.get_js_ref(), size),
         }
     }
