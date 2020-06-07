@@ -33,9 +33,8 @@ struct Game {
     shape: Vec<Sphere>,
 }
 
-impl Default for Game {
-    fn default() -> Self {
-        babylon::js::log("hey2");
+impl Game {
+    fn new() -> Self {
         Game {
             scene: Scene::create_from_basic_engine("#renderCanvas"),
             shape: vec![],
