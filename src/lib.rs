@@ -1,32 +1,23 @@
 pub use js_ffi::*;
 
+mod api;
+
 pub struct Scene {
-    scene_ref: JSValue,
+    scene_ref: JSObject,
+}
+
+pub struct Sphere {
+    sphere_ref: JSObject,
 }
 
 impl Scene {
     pub fn create_from_basic_engine(selector: &str) -> Scene {
-        let func = register_function(
-            r#"
-            function(selector){
-                var canvas = document.querySelector(selector);
-                var engine = new BABYLON.Engine(canvas, true); 
-                var createScene = function () {
-                    var scene = new BABYLON.Scene(engine);
-                    return scene;
-                };
-                var scene = createScene();
-                engine.runRenderLoop(function () {
-                        scene.render();
-                });
-                window.addEventListener("resize", function () {
-                        engine.resize();
-                });
-                return scene;
-            }
-        "#,
-        );
-        let scene_ref = func.invoke_1(selector);
-        Scene { scene_ref }
+        Scene { scene_ref: crate::api::BabylonApi::create_basic_scene(selector) }
+    }
+}
+
+impl Sphere {
+    pub fn create_sphere(scene: &Scene, size:f32) -> Sphere {
+        Sphere{ sphere_ref: crate::api::BabylonApi::create_sphere(&scene.scene_ref, size)}
     }
 }
