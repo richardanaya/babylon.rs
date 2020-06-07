@@ -40,3 +40,5 @@ pub fn main() {
     game.init();
 }
 ```
+
+See this demo [here](https://richardanaya.github.io/babylon.rs/examples/helloworld/index.html)
