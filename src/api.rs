@@ -273,14 +273,14 @@ impl BabylonApi {
         let api = globals::get::<BabylonApi>();
         api.fn_create_scene.invoke_1(selector).to_js_object()
     }
-    pub fn create_sphere(scene_ref: &JSObject, size: f32) -> JSObject {
+    pub fn create_sphere(scene_ref: &JSObject, size: f64) -> JSObject {
         let api = globals::get::<BabylonApi>();
         api.fn_create_sphere
             .invoke_2(scene_ref, size)
             .to_js_object()
     }
 
-    pub fn create_cube(scene_ref: &JSObject, width: f32, height: f32, depth: f32) -> JSObject {
+    pub fn create_cube(scene_ref: &JSObject, width: f64, height: f64, depth: f64) -> JSObject {
         let api = globals::get::<BabylonApi>();
         api.fn_create_cube
             .invoke_4(scene_ref, width, height, depth)
@@ -314,12 +314,12 @@ impl BabylonApi {
         api.fn_debug.invoke_0();
     }
 
-    pub fn random() -> f32 {
+    pub fn random() -> f64 {
         let api = globals::get::<BabylonApi>();
-        api.fn_random.invoke_0() as f32
+        api.fn_random.invoke_0()
     }
 
-    pub fn set_position(mesh: &JSObject, x: f32, y: f32, z: f32) {
+    pub fn set_position(mesh: &JSObject, x: f64, y: f64, z: f64) {
         let api = globals::get::<BabylonApi>();
         api.fn_set_position.invoke_4(mesh, x, y, z);
     }
@@ -329,27 +329,27 @@ impl BabylonApi {
         api.fn_set_material.invoke_2(mesh, mat);
     }
 
-    pub fn set_emmisive_color(mat: &JSObject, r: f32, g: f32, b: f32) {
+    pub fn set_emmisive_color(mat: &JSObject, r: f64, g: f64, b: f64) {
         let api = globals::get::<BabylonApi>();
         api.fn_set_emmisive_color.invoke_4(mat, r, g, b);
     }
 
-    pub fn set_diffuse_color(mat: &JSObject, r: f32, g: f32, b: f32) {
+    pub fn set_diffuse_color(mat: &JSObject, r: f64, g: f64, b: f64) {
         let api = globals::get::<BabylonApi>();
         api.fn_set_diffuse_color.invoke_4(mat, r, g, b);
     }
 
-    pub fn set_specular_color(mat: &JSObject, r: f32, g: f32, b: f32) {
+    pub fn set_specular_color(mat: &JSObject, r: f64, g: f64, b: f64) {
         let api = globals::get::<BabylonApi>();
         api.fn_set_specular_color.invoke_4(mat, r, g, b);
     }
 
-    pub fn set_ambient_color(mat: &JSObject, r: f32, g: f32, b: f32) {
+    pub fn set_ambient_color(mat: &JSObject, r: f64, g: f64, b: f64) {
         let api = globals::get::<BabylonApi>();
         api.fn_set_ambient_color.invoke_4(mat, r, g, b);
     }
 
-    pub fn set_alpha(mat: &JSObject, a: f32) {
+    pub fn set_alpha(mat: &JSObject, a: f64) {
         let api = globals::get::<BabylonApi>();
         api.fn_set_alpha.invoke_2(mat, a);
     }

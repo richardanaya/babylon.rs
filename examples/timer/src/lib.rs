@@ -34,11 +34,11 @@ pub fn main() {
             game.time -= 1000.0;
             // add sphere every second
             let mut sphere = Sphere::new(&game.scene, babylon::js::random());
-            sphere.set_position(
+            sphere.set_position(Vector::new(
                 babylon::js::random() - 0.5,
                 babylon::js::random() - 0.5,
                 babylon::js::random() - 0.5,
-            );
+            ));
             game.shape.push(sphere);
         }
     })

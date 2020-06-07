@@ -29,11 +29,11 @@ pub fn main() {
             babylon::js::log(&format!("{} {}", event_type, key_code));
             let mut game = GAME.lock().unwrap();
             let mut sphere = Sphere::new(&game.scene, babylon::js::random());
-            sphere.set_position(
+            sphere.set_position(Vector::new(
                 babylon::js::random() - 0.5,
                 babylon::js::random() - 0.5,
                 babylon::js::random() - 0.5,
-            );
+            ));
             game.shape.push(sphere);
         }
     })

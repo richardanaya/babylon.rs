@@ -5,23 +5,25 @@ use crate::math::*;
 use js_ffi::*;
 
 pub struct Sphere {
-    position: Vector3<f32>,
+    position: Vector3<f64>,
     js_ref: JSObject,
 }
 
 impl Sphere {
-    pub fn new(scene: &Scene, size: f32) -> Sphere {
+    pub fn new(scene: &Scene, size: f64) -> Sphere {
         Sphere {
             position: Vector3::new(0.0, 0.0, 0.0),
             js_ref: BabylonApi::create_sphere(scene.get_js_ref(), size),
         }
     }
 
-    pub fn set_position(&mut self, x: f32, y: f32, z: f32) {
-        self.position.x = x;
-        self.position.y = y;
-        self.position.z = z;
-        BabylonApi::set_position(&mut self.js_ref, x, y, z);
+    pub fn get_position(&self) -> &Vector {
+        &self.position
+    }
+
+    pub fn set_position(&mut self, p:Vector) {
+        self.position = p;
+        BabylonApi::set_position(&mut self.js_ref, self.position.x, self.position.y, self.position.z);
     }
 
     pub fn set_material<T>(&mut self, mat: &T)
@@ -40,23 +42,25 @@ impl Drop for Sphere {
 }
 
 pub struct Cube {
-    position: Vector3<f32>,
+    position: Vector3<f64>,
     js_ref: JSObject,
 }
 
 impl Cube {
-    pub fn new(scene: &Scene, width: f32, height: f32, depth: f32) -> Sphere {
+    pub fn new(scene: &Scene, width: f64, height: f64, depth: f64) -> Sphere {
         Sphere {
             position: Vector3::new(0.0, 0.0, 0.0),
             js_ref: BabylonApi::create_cube(scene.get_js_ref(), width, height, depth),
         }
     }
 
-    pub fn set_position(&mut self, x: f32, y: f32, z: f32) {
-        self.position.x = x;
-        self.position.y = y;
-        self.position.z = z;
-        BabylonApi::set_position(&mut self.js_ref, x, y, z);
+    pub fn get_position(&self) -> &Vector {
+        &self.position
+    }
+
+    pub fn set_position(&mut self, p:Vector) {
+        self.position = p;
+        BabylonApi::set_position(&mut self.js_ref, p.x, p.y, p.z);
     }
 
     pub fn set_material<T>(&mut self, mat: &T)

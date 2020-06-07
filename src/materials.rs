@@ -13,7 +13,7 @@ pub struct StandardMaterial {
     specular_color: Color,
     emmisive_color: Color,
     ambient_color: Color,
-    alpha: f32,
+    alpha: f64,
 }
 
 impl StandardMaterial {
@@ -48,7 +48,7 @@ impl StandardMaterial {
         BabylonApi::set_ambient_color(self.get_js_ref(), c.x, c.y, c.z);
     }
 
-    pub fn set_alpha(&mut self, a: f32) {
+    pub fn set_alpha(&mut self, a: f64) {
         self.alpha = a;
         BabylonApi::set_alpha(self.get_js_ref(), a);
     }

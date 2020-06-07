@@ -53,11 +53,11 @@ pub fn main() {
     let mut game = GAME.lock().unwrap();
     for _ in 0..10 {
         let mut sphere = Sphere::new(&game.scene, babylon::js::random());
-        sphere.set_position(
+        sphere.set_position(Vector::new(
             babylon::js::random() - 0.5,
             babylon::js::random() - 0.5,
             babylon::js::random() - 0.5,
-        );
+        ));
         game.shape.push(sphere);
     }
 }
@@ -84,11 +84,11 @@ for _ in 0..10 {
     mat.set_diffuse_color(Color::new(babylon::js::random(),babylon::js::random(),babylon::js::random()));
     mat.set_alpha(babylon::js::random());
     cube.set_material(&mat);
-    cube.set_position(
+    cube.set_position(Vector::new(
         babylon::js::random() - 0.5,
         babylon::js::random() - 0.5,
         babylon::js::random() - 0.5,
-    );
+    ));
     game.shape.push(cube);
 }
 ```

@@ -33,14 +33,18 @@ pub fn main() {
             babylon::js::random(),
         );
         let mut mat = StandardMaterial::new(&game.scene);
-        mat.set_diffuse_color(Color::new(babylon::js::random(),babylon::js::random(),babylon::js::random()));
+        mat.set_diffuse_color(Color::new(
+            babylon::js::random(),
+            babylon::js::random(),
+            babylon::js::random(),
+        ));
         mat.set_alpha(babylon::js::random());
         cube.set_material(&mat);
-        cube.set_position(
+        cube.set_position(Vector::new(
             babylon::js::random() - 0.5,
             babylon::js::random() - 0.5,
             babylon::js::random() - 0.5,
-        );
+        ));
         game.shape.push(cube);
     }
 }
