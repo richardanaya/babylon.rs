@@ -28,9 +28,9 @@ pub fn main() {
     for _ in 0..10 {
         let mut sphere = Sphere::create_sphere(&game.scene, babylon::js::random());
         sphere.set_position(
-            babylon::js::random(),
-            babylon::js::random(),
-            -babylon::js::random(),
+            babylon::js::random() - 0.5,
+            babylon::js::random() - 0.5,
+            babylon::js::random() - 0.5,
         );
         game.shape.push(sphere);
     }
