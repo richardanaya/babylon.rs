@@ -1,6 +1,10 @@
 use js_ffi::*;
 
 pub struct BabylonApi {
+    fn_log: JSInvoker,
+    fn_error: JSInvoker,
+    fn_debug: JSInvoker,
+    fn_random: JSInvoker,
     fn_create_basic_scene: JSInvoker,
     fn_create_sphere: JSInvoker,
     fn_dispose_mesh: JSInvoker,
@@ -70,6 +74,34 @@ impl Default for BabylonApi {
                 }
             "#,
             ),
+            fn_log: register_function(
+                r#"
+                function(msg){
+                    console.log(msg)
+                }
+            "#,
+            ),
+            fn_error: register_function(
+                r#"
+                function(msg){
+                    console.error(msg)
+                }
+            "#,
+            ),
+            fn_debug: register_function(
+                r#"
+                function(){
+                    debugger;
+                }
+            "#,
+            ),
+            fn_random: register_function(
+                r#"
+                function(){
+                    return Math.random()
+                }
+            "#,
+            ),
         }
     }
 }
@@ -85,8 +117,28 @@ impl BabylonApi {
         api.fn_create_sphere.invoke_2(scene_ref, size).to_js_object()
     }
 
-    pub fn dispose_mesh(mesh: &JSObject,) -> JSObject {
+    pub fn dispose_mesh(mesh: &JSObject,) {
         let api = globals::get::<BabylonApi>();
-        api.fn_dispose_mesh.invoke_1(mesh).to_js_object()
+        api.fn_dispose_mesh.invoke_1(mesh);
+    }
+
+    pub fn log(msg:&str) {
+        let api = globals::get::<BabylonApi>();
+        api.fn_log.invoke_1(msg);
+    }
+
+    pub fn error(msg:&str) {
+        let api = globals::get::<BabylonApi>();
+        api.fn_error.invoke_1(msg);
+    }
+
+    pub fn debugger() {
+        let api = globals::get::<BabylonApi>();
+        api.fn_debug.invoke_0();
+    }
+
+    pub fn random() -> f32 {
+        let api = globals::get::<BabylonApi>();
+        api.fn_random.invoke_0() as f32
     }
 }
