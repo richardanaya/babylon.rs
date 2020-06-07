@@ -12,3 +12,4 @@ readme="README.md"
 [dependencies]
 js_ffi = "0"
 lazy_static = "1.4"
+globals = "1"
