@@ -7,6 +7,7 @@ pub struct BabylonApi {
     fn_random: JSInvoker,
     fn_create_basic_scene: JSInvoker,
     fn_create_sphere: JSInvoker,
+    fn_create_cube: JSInvoker,
     fn_dispose_mesh: JSInvoker,
     fn_set_position: JSInvoker,
 }
@@ -68,6 +69,16 @@ impl Default for BabylonApi {
                 }
             "#,
             ),
+            fn_create_cube: register_function(
+                r#"
+                function(scene,w,h,d){
+                    return BABYLON.MeshBuilder.CreateBox(
+                        null,
+                        { height: h, width: w, depth: d },
+                        scene);
+                }
+            "#,
+            ),
             fn_dispose_mesh: register_function(
                 r#"
                 function(mesh){
@@ -124,6 +135,13 @@ impl BabylonApi {
         let api = globals::get::<BabylonApi>();
         api.fn_create_sphere
             .invoke_2(scene_ref, size)
+            .to_js_object()
+    }
+
+    pub fn create_cube(scene_ref: &JSObject, width: f32, height: f32, depth: f32) -> JSObject {
+        let api = globals::get::<BabylonApi>();
+        api.fn_create_cube
+            .invoke_4(scene_ref, width, height, depth)
             .to_js_object()
     }
 
