@@ -1,6 +1,6 @@
 use crate::api::BabylonApi;
-use js_ffi::*;
 use crate::core::Scene;
+use js_ffi::*;
 
 pub struct Camera {
     js_ref: JSObject,

@@ -394,8 +394,6 @@ impl BabylonApi {
 
     pub fn create_point_light(scene: &JSObject) -> JSObject {
         let api = globals::get::<BabylonApi>();
-        api.fn_create_point_light
-            .invoke_1(scene)
-            .to_js_object()
+        api.fn_create_point_light.invoke_1(scene).to_js_object()
     }
 }
