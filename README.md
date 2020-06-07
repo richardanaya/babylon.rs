@@ -44,6 +44,7 @@ impl Game {
 
 #[no_mangle]
 pub fn main() {
+    babylon::js::log("Starting demo...");
     let mut game = GAME.lock().unwrap();
     for _ in 0..10 {
         let mut sphere = Sphere::create_sphere(&game.scene, babylon::js::random());
