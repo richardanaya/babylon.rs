@@ -9,11 +9,11 @@ lazy_static! {
 
 struct Game {
     scene: Scene,
-    camera: Camera,
-    light_1: HemisphericLight,
-    light_2: PointLight,
+    _camera: Camera,
+    _light_1: HemisphericLight,
+    _light_2: PointLight,
     ball: Sphere,
-    paddle_1: Cube,
+    _paddle_1: Cube,
     paddle_2: Cube,
     dir: f64,
 }
@@ -22,21 +22,21 @@ impl Game {
     fn new() -> Self {
         let mut scene = Scene::new("#renderCanvas");
         scene.set_clear_color(Color::new(0.0, 0.0, 0.0));
-        let camera = Camera::new(&scene);
-        let light_1 = HemisphericLight::new(&scene);
-        let light_2 = PointLight::new(&scene);
+        let _camera = Camera::new(&scene);
+        let _light_1 = HemisphericLight::new(&scene);
+        let _light_2 = PointLight::new(&scene);
         let ball = Sphere::new(&scene, 0.05);
-        let mut paddle_1 = Cube::new(&scene, 0.5, 0.05, 0.05);
-        paddle_1.set_position(Vector::new(0.0, 0.5, 0.0));
+        let mut _paddle_1 = Cube::new(&scene, 0.5, 0.05, 0.05);
+        _paddle_1.set_position(Vector::new(0.0, 0.5, 0.0));
         let mut paddle_2 = Cube::new(&scene, 0.5, 0.05, 0.05);
         paddle_2.set_position(Vector::new(0.0, -0.5, 0.0));
         Game {
             scene,
-            camera,
-            light_1,
-            light_2,
+            _camera,
+            _light_1,
+            _light_2,
             ball,
-            paddle_1,
+            _paddle_1,
             paddle_2,
             dir: 0.0,
         }
@@ -44,16 +44,22 @@ impl Game {
 
     fn run(&mut self, delta_time: f64) {
         let p = self.ball.get_position();
+        let x = p.x;
+        let y = p.y;
+        let z = p.z;
         self.ball
-            .set_position(p + Vector::new(0.0, -1.0 * delta_time, 0.0));
+            .set_position(Vector::new(x, y + -1.0 * delta_time, z));
         if self.dir != 0.0 {
             let p = self.paddle_2.get_position();
+            let x = p.x;
+            let y = p.y;
+            let z = p.z;
             self.paddle_2
-                .set_position(p + Vector::new(delta_time * self.dir, 0.0, 0.0))
+                .set_position(Vector::new(x + delta_time * self.dir, y, z))
         }
     }
 
-    fn key_up(&mut self, key_code: f64) {
+    fn key_up(&mut self, _key_code: f64) {
         self.dir = 0.0;
     }
 
@@ -70,7 +76,7 @@ impl Game {
 #[no_mangle]
 pub fn main() {
     babylon::js::log("Starting demo...");
-    let mut game = GAME.lock().unwrap();
+    let game = GAME.lock().unwrap();
     game.scene.add_before_render_observable(|| {
         let mut game = GAME.lock().unwrap();
         let delta_time = game.scene.get_delta_time();
