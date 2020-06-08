@@ -1,11 +1,4 @@
 use babylon::prelude::*;
-#[macro_use]
-extern crate lazy_static;
-use std::sync::Mutex;
-
-lazy_static! {
-    static ref GAME: Mutex<Game> = Mutex::new(Game::new());
-}
 
 struct Game {
     scene: Scene,
@@ -19,8 +12,8 @@ struct Game {
     ball_dir: Vector,
 }
 
-impl Game {
-    fn new() -> Self {
+impl Default for Game {
+    fn default() -> Self {
         let mut scene = Scene::new("#renderCanvas");
         scene.set_clear_color(Color::new(0.0, 0.0, 0.0));
         let _camera = Camera::new(&scene);
@@ -48,10 +41,15 @@ impl Game {
             ball_dir: Vector::new(babylon::js::random() - 0.5, -1.0, 0.0),
         }
     }
+}
+
+impl BasicGame for Game {
+    fn get_scene(&self) -> &Scene {
+        &self.scene
+    }
 
     fn run(&mut self, delta_time: f64) {
         // get positions
-        let p = self.paddle_1.get_position();
         let p2 = self.paddle_2.get_position();
         let bp = self.ball.get_position();
 
@@ -74,18 +72,12 @@ impl Game {
         }
 
         // move opponent paddle to match ball
-        let x = b_x;
-        let y = p.y;
-        let z = p.z;
-        self.paddle_1.set_position(Vector::new(x, y, z));
+        self.paddle_1.set_position_x(b_x);
 
         // move paddle if it has velocity
         if self.paddle_dir != 0.0 {
-            let x = p2.x;
-            let y = p2.y;
-            let z = p2.z;
-            self.paddle_2
-                .set_position(Vector::new(x + delta_time * self.paddle_dir, y, z));
+            let p2_x = p2.x + delta_time * self.paddle_dir;
+            self.paddle_2.set_position_x(p2_x)
         }
     }
 
@@ -94,7 +86,6 @@ impl Game {
     }
 
     fn key_down(&mut self, key_code: f64) {
-        babylon::js::log(&format!("{}", key_code));
         if key_code == 37.0 {
             self.paddle_dir = 1.0;
         } else if key_code == 39.0 {
@@ -105,20 +96,5 @@ impl Game {
 
 #[no_mangle]
 pub fn main() {
-    babylon::js::log("Starting demo...");
-    let game = GAME.lock().unwrap();
-    game.scene.add_before_render_observable(|| {
-        let mut game = GAME.lock().unwrap();
-        let delta_time = game.scene.get_delta_time();
-        game.run(delta_time / 1000.0);
-    });
-    game.scene.add_keyboard_observable(|event_type, key_code| {
-        let mut game = GAME.lock().unwrap();
-        if event_type == KEYDOWN {
-            game.key_down(key_code);
-        }
-        if event_type == KEYUP {
-            game.key_up(key_code);
-        }
-    })
+    run_basic_game::<Game>();
 }

@@ -31,6 +31,36 @@ impl Sphere {
         );
     }
 
+    pub fn set_position_x(&mut self, v: f64) {
+        self.position.x = v;
+        BabylonApi::set_position(
+            &mut self.js_ref,
+            self.position.x,
+            self.position.y,
+            self.position.z,
+        );
+    }
+
+    pub fn set_position_y(&mut self, v: f64) {
+        self.position.y = v;
+        BabylonApi::set_position(
+            &mut self.js_ref,
+            self.position.x,
+            self.position.y,
+            self.position.z,
+        );
+    }
+
+    pub fn set_position_z(&mut self, v: f64) {
+        self.position.z = v;
+        BabylonApi::set_position(
+            &mut self.js_ref,
+            self.position.x,
+            self.position.y,
+            self.position.z,
+        );
+    }
+
     pub fn set_material<T>(&mut self, mat: &T)
     where
         T: Material,
@@ -66,6 +96,36 @@ impl Cube {
     pub fn set_position(&mut self, p: Vector) {
         self.position = p;
         BabylonApi::set_position(&mut self.js_ref, p.x, p.y, p.z);
+    }
+
+    pub fn set_position_x(&mut self, v: f64) {
+        self.position.x = v;
+        BabylonApi::set_position(
+            &mut self.js_ref,
+            self.position.x,
+            self.position.y,
+            self.position.z,
+        );
+    }
+
+    pub fn set_position_y(&mut self, v: f64) {
+        self.position.y = v;
+        BabylonApi::set_position(
+            &mut self.js_ref,
+            self.position.x,
+            self.position.y,
+            self.position.z,
+        );
+    }
+
+    pub fn set_position_z(&mut self, v: f64) {
+        self.position.z = v;
+        BabylonApi::set_position(
+            &mut self.js_ref,
+            self.position.x,
+            self.position.y,
+            self.position.z,
+        );
     }
 
     pub fn set_material<T>(&mut self, mat: &T)
