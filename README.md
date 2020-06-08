@@ -1,8 +1,8 @@
-# Babylon.rs
+# babylon.rs
 
 <a href="https://docs.rs/babylon"><img src="https://img.shields.io/badge/docs-latest-blue.svg?style=flat-square" alt="docs.rs docs" /></a>
 
-A WebAssembly wrapper for [Babylon.js](https://www.babylonjs.com/) in Rust.
+A WebAssembly wrapper for [babylon.js](https://www.babylonjs.com/) in Rust.
 
 This project is pre-alpha and the api is in active exploration. Current priorities:
 
