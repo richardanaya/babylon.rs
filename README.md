@@ -97,6 +97,11 @@ See this demo [here](https://richardanaya.github.io/babylon.rs/examples/material
 
 # Pong in 100 Lines
 
+<p align="center">
+  <img src="https://richardanaya.github.io/babylon.rs/images/demo_2.png">
+</p>
+
+
 ```rust
 use babylon::prelude::*;
 
@@ -199,6 +204,8 @@ pub fn main() {
     run_basic_game::<Game>();
 }
 ```
+
+See this demo [here](https://richardanaya.github.io/babylon.rs/examples/pong/index.html) 
 
 # Other Demos
 
