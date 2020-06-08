@@ -18,6 +18,7 @@ pub struct BabylonApi {
     fn_set_diffuse_color: JSInvoker,
     fn_set_specular_color: JSInvoker,
     fn_set_ambient_color: JSInvoker,
+    fn_set_clear_color: JSInvoker,
     fn_set_alpha: JSInvoker,
     fn_add_keyboard_observable: JSInvoker,
     fn_add_observable: JSInvoker,
@@ -189,6 +190,13 @@ impl Default for BabylonApi {
                 }
             "#,
             ),
+            fn_set_clear_color: register_function(
+                r#"
+                function(scene,r,g,b){
+                    scene.clearColor = new BABYLON.Color3(r, g, b);
+                }
+            "#,
+            ),
             fn_set_alpha: register_function(
                 r#"
                 function(mat,a){
@@ -347,6 +355,11 @@ impl BabylonApi {
     pub fn set_ambient_color(mat: &JSObject, r: f64, g: f64, b: f64) {
         let api = globals::get::<BabylonApi>();
         api.fn_set_ambient_color.invoke_4(mat, r, g, b);
+    }
+
+    pub fn set_clear_color(mat: &JSObject, r: f64, g: f64, b: f64) {
+        let api = globals::get::<BabylonApi>();
+        api.fn_set_clear_color.invoke_4(mat, r, g, b);
     }
 
     pub fn set_alpha(mat: &JSObject, a: f64) {

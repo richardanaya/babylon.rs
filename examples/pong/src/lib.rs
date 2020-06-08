@@ -20,7 +20,8 @@ struct Game {
 
 impl Game {
     fn new() -> Self {
-        let scene = Scene::new("#renderCanvas");
+        let mut scene = Scene::new("#renderCanvas");
+        scene.set_clear_color(Color::new(0.0, 0.0, 0.0));
         let camera = Camera::new(&scene);
         let light_1 = HemisphericLight::new(&scene);
         let light_2 = PointLight::new(&scene);
