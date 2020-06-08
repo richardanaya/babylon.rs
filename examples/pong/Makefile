@@ -3,3 +3,5 @@ build:
 	@cp target/wasm32-unknown-unknown/release/example.wasm .
 lint:
 	@cargo fmt
+serve:build
+	python3 -m http.server 8080

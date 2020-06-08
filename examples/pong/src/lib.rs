@@ -26,10 +26,15 @@ impl Game {
         let _light_1 = HemisphericLight::new(&scene);
         let _light_2 = PointLight::new(&scene);
         let ball = Sphere::new(&scene, 0.05);
+        let mut paddle_mat = StandardMaterial::new(&scene);
+        paddle_mat.set_diffuse_color(Color::new(0.5, 0.5, 0.5));
+        paddle_mat.set_emmisive_color(Color::new(0.5, 0.5, 0.5));
         let mut _paddle_1 = Cube::new(&scene, 0.5, 0.05, 0.05);
         _paddle_1.set_position(Vector::new(0.0, 0.5, 0.0));
+        _paddle_1.set_material(&paddle_mat);
         let mut paddle_2 = Cube::new(&scene, 0.5, 0.05, 0.05);
         paddle_2.set_position(Vector::new(0.0, -0.5, 0.0));
+        paddle_2.set_material(&paddle_mat);
         Game {
             scene,
             _camera,
