@@ -107,7 +107,7 @@ let mut gltf = GLTF::new(&game.scene, "BoomBox.gltf");
 gltf.set_scaling(Vector::new(50.0, 50.0, 50.0));
 ```
 
-See this demo [here](https://richardanaya.github.io/babylon.rs/examples/glft/index.html) ( be sure to play with mouse and arrow keys :arrow_left: :arrow_up: :arrow_down: :arrow_right:!)
+See this demo [here](https://richardanaya.github.io/babylon.rs/examples/gltf/index.html) ( be sure to play with mouse and arrow keys :arrow_left: :arrow_up: :arrow_down: :arrow_right:!)
 
 # Pong in 100 Lines
 
