@@ -13,6 +13,7 @@ pub struct BabylonApi {
     fn_create_standard_material: JSInvoker,
     fn_dispose_mesh: JSInvoker,
     fn_set_position: JSInvoker,
+    fn_set_scaling: JSInvoker,
     fn_set_material: JSInvoker,
     fn_set_emmisive_color: JSInvoker,
     fn_set_diffuse_color: JSInvoker,
@@ -26,6 +27,7 @@ pub struct BabylonApi {
     fn_create_arc_rotate_camera: JSInvoker,
     fn_create_hemispheric_light: JSInvoker,
     fn_create_point_light: JSInvoker,
+    fn_create_gltf: JSInvoker,
 }
 
 impl Default for BabylonApi {
@@ -38,6 +40,10 @@ impl Default for BabylonApi {
                     var engine = new BABYLON.Engine(canvas, true); 
                     var createScene = function () {
                         var scene = new BABYLON.Scene(engine);
+                        scene.createDefaultEnvironment({
+                            createGround: false,
+                            createSkybox: false,
+                        });
     
                         // Add a camera to the scene and attach it to the canvas
                         var camera = new BABYLON.ArcRotateCamera(
@@ -155,6 +161,13 @@ impl Default for BabylonApi {
                 }
             "#,
             ),
+            fn_set_scaling: register_function(
+                r#"
+                function(mesh,x,y,z){
+                    mesh.scaling = new BABYLON.Vector3(x,y,z);
+                }
+            "#,
+            ),
             fn_set_material: register_function(
                 r#"
                 function(mesh,mat){
@@ -268,6 +281,20 @@ impl Default for BabylonApi {
                 }
             "#,
             ),
+            fn_create_gltf: register_function(
+                r#"
+                function(scene,file){
+                    var dummy = new BABYLON.Mesh(null, scene);
+                    BABYLON.SceneLoader.ImportMesh(null, "", file, scene, function (newMeshes, particleSystems, skeletons) {
+                        for(v in newMeshes){
+                            var dude = newMeshes[v];
+                            dude.parent = dummy;
+                        }
+                    });
+                    return dummy;
+                }
+                "#,
+            ),
         }
     }
 }
@@ -330,6 +357,11 @@ impl BabylonApi {
     pub fn set_position(mesh: &JSObject, x: f64, y: f64, z: f64) {
         let api = globals::get::<BabylonApi>();
         api.fn_set_position.invoke_4(mesh, x, y, z);
+    }
+
+    pub fn set_scaling(mesh: &JSObject, x: f64, y: f64, z: f64) {
+        let api = globals::get::<BabylonApi>();
+        api.fn_set_scaling.invoke_4(mesh, x, y, z);
     }
 
     pub fn set_material(mesh: &JSObject, mat: &JSObject) {
@@ -408,5 +440,12 @@ impl BabylonApi {
     pub fn create_point_light(scene: &JSObject) -> JSObject {
         let api = globals::get::<BabylonApi>();
         api.fn_create_point_light.invoke_1(scene).to_js_object()
+    }
+
+    pub fn create_gltf(scene: &JSObject, file: &str) -> JSObject {
+        let api = globals::get::<BabylonApi>();
+        api.fn_create_gltf
+            .invoke_2(scene, file)
+            .to_js_object()
     }
 }

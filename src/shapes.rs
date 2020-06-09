@@ -142,3 +142,68 @@ impl Drop for Cube {
         release_object(&self.js_ref)
     }
 }
+
+pub struct GLTF {
+    position: Vector3<f64>,
+    js_ref: JSObject,
+}
+
+impl GLTF {
+    pub fn new(scene: &Scene, file: &str) -> GLTF {
+        GLTF {
+            position: Vector3::new(0.0, 0.0, 0.0),
+            js_ref: BabylonApi::create_gltf(scene.get_js_ref(), file),
+        }
+    }
+
+    pub fn get_position(&self) -> &Vector {
+        &self.position
+    }
+
+    pub fn set_position(&mut self, p: Vector) {
+        self.position = p;
+        BabylonApi::set_position(&mut self.js_ref, p.x, p.y, p.z);
+    }
+
+    pub fn set_position_x(&mut self, v: f64) {
+        self.position.x = v;
+        BabylonApi::set_position(
+            &mut self.js_ref,
+            self.position.x,
+            self.position.y,
+            self.position.z,
+        );
+    }
+
+    pub fn set_position_y(&mut self, v: f64) {
+        self.position.y = v;
+        BabylonApi::set_position(
+            &mut self.js_ref,
+            self.position.x,
+            self.position.y,
+            self.position.z,
+        );
+    }
+
+    pub fn set_position_z(&mut self, v: f64) {
+        self.position.z = v;
+        BabylonApi::set_position(
+            &mut self.js_ref,
+            self.position.x,
+            self.position.y,
+            self.position.z,
+        );
+    }
+
+    pub fn set_scaling(&mut self, p: Vector) {
+        self.position = p;
+        BabylonApi::set_scaling(&mut self.js_ref, p.x, p.y, p.z);
+    }
+}
+
+impl Drop for GLTF {
+    fn drop(&mut self) {
+        BabylonApi::dispose_mesh(&mut self.js_ref);
+        release_object(&self.js_ref)
+    }
+}
