@@ -112,7 +112,7 @@ See this demo [here](https://richardanaya.github.io/babylon.rs/examples/glft/ind
 # Pong in 100 Lines
 
 <p align="center">
-  <img src="https://richardanaya.github.io/babylon.rs/images/demo_2.png">
+  <img src="https://richardanaya.github.io/babylon.rs/images/demo_3.png">
 </p>
 
 
