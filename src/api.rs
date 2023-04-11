@@ -1,4 +1,3 @@
-use alloc::boxed::Box;
 use web::*;
 
 pub struct BabylonApi {
@@ -230,7 +229,7 @@ impl Default for BabylonApi {
                 r#"
                 function(scene,cb){
                     scene.onKeyboardObservable.add((kbInfo) => {
-                        cb(kbInfo.type,kbInfo.event.keyCode)
+                        this.module.instance.exports[cb](kbInfo.type,kbInfo.event.keyCode)
                     });
                 }
             "#
@@ -239,7 +238,7 @@ impl Default for BabylonApi {
                 r#"
                 function(scene,name,cb){
                     scene[name].add(() => {
-                        cb()
+                        this.module.instance.exports[cb]()
                     });
                 }
             "#
@@ -407,21 +406,19 @@ impl BabylonApi {
 
     pub fn add_keyboard_observable(
         scene: &ExternRef,
-        callback: Box<dyn FnMut(f64, f64) -> () + Send>,
+        callback: &str
     ) {
-        /*let cb = callback;
         let api = globals::get::<BabylonApi>();
-        api.fn_add_keyboard_observable.invoke(&[InvokeParam::ExternRef(scene), InvokeParam::ExternRef(cb)]);*/
+        api.fn_add_keyboard_observable.invoke(&[InvokeParam::ExternRef(scene), InvokeParam::String(callback)]);
     }
 
     pub fn add_observable(
         scene: &ExternRef,
         observable_name: &str,
-        callback: Box<dyn FnMut() -> () + Send>,
+        callback: &str
     ) {
-        /*let cb = create_callback(callback);
         let api = globals::get::<BabylonApi>();
-        api.fn_add_observable.invoke(&[InvokeParam::ExternRef(scene), InvokeParam::String(observable_name),  cb]);*/
+        api.fn_add_observable.invoke(&[InvokeParam::ExternRef(scene), InvokeParam::String(observable_name), InvokeParam::String(callback)]);
     }
 
     pub fn get_delta_time(scene: &ExternRef) -> f64 {

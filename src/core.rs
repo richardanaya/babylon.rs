@@ -1,6 +1,5 @@
 use crate::api::BabylonApi;
 use crate::math::*;
-use alloc::boxed::Box;
 use web::*;
 
 pub struct Scene {
@@ -32,21 +31,17 @@ impl Scene {
         &self.scene_ref
     }
 
-    pub fn add_keyboard_observable<T>(&self, callback: T)
-    where
-        T: 'static + FnMut(f64, f64) -> () + Send,
+    pub fn add_keyboard_observable(&self, callback: &str)
     {
-        BabylonApi::add_keyboard_observable(&self.scene_ref, Box::new(callback));
+        BabylonApi::add_keyboard_observable(&self.scene_ref, callback);
     }
 
-    pub fn add_before_render_observable<T>(&self, callback: T)
-    where
-        T: 'static + FnMut() -> () + Send,
+    pub fn add_before_render_observable(&self, callback: &str)
     {
         BabylonApi::add_observable(
             &self.scene_ref,
             "onBeforeRenderObservable",
-            Box::new(callback),
+            callback,
         );
     }
 
