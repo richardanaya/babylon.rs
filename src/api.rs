@@ -1,39 +1,39 @@
 use alloc::boxed::Box;
-use js_ffi::*;
+use web::*;
 
 pub struct BabylonApi {
-    fn_log: JSInvoker,
-    fn_error: JSInvoker,
-    fn_debug: JSInvoker,
-    fn_random: JSInvoker,
-    fn_create_basic_scene: JSInvoker,
-    fn_create_scene: JSInvoker,
-    fn_create_sphere: JSInvoker,
-    fn_create_cube: JSInvoker,
-    fn_create_standard_material: JSInvoker,
-    fn_dispose_mesh: JSInvoker,
-    fn_set_position: JSInvoker,
-    fn_set_scaling: JSInvoker,
-    fn_set_material: JSInvoker,
-    fn_set_emmisive_color: JSInvoker,
-    fn_set_diffuse_color: JSInvoker,
-    fn_set_specular_color: JSInvoker,
-    fn_set_ambient_color: JSInvoker,
-    fn_set_clear_color: JSInvoker,
-    fn_set_alpha: JSInvoker,
-    fn_add_keyboard_observable: JSInvoker,
-    fn_add_observable: JSInvoker,
-    fn_get_delta_time: JSInvoker,
-    fn_create_arc_rotate_camera: JSInvoker,
-    fn_create_hemispheric_light: JSInvoker,
-    fn_create_point_light: JSInvoker,
-    fn_create_gltf: JSInvoker,
+    fn_log: JSFunction,
+    fn_error: JSFunction,
+    fn_debug: JSFunction,
+    fn_random: JSFunction,
+    fn_create_basic_scene: JSFunction,
+    fn_create_scene: JSFunction,
+    fn_create_sphere: JSFunction,
+    fn_create_cube: JSFunction,
+    fn_create_standard_material: JSFunction,
+    fn_dispose_mesh: JSFunction,
+    fn_set_position: JSFunction,
+    fn_set_scaling: JSFunction,
+    fn_set_material: JSFunction,
+    fn_set_emmisive_color: JSFunction,
+    fn_set_diffuse_color: JSFunction,
+    fn_set_specular_color: JSFunction,
+    fn_set_ambient_color: JSFunction,
+    fn_set_clear_color: JSFunction,
+    fn_set_alpha: JSFunction,
+    fn_add_keyboard_observable: JSFunction,
+    fn_add_observable: JSFunction,
+    fn_get_delta_time: JSFunction,
+    fn_create_arc_rotate_camera: JSFunction,
+    fn_create_hemispheric_light: JSFunction,
+    fn_create_point_light: JSFunction,
+    fn_create_gltf: JSFunction,
 }
 
 impl Default for BabylonApi {
     fn default() -> Self {
         BabylonApi {
-            fn_create_basic_scene: register_function(
+            fn_create_basic_scene: js!(
                 r#"
                 function(selector){
                     var canvas = document.querySelector(selector);
@@ -79,9 +79,9 @@ impl Default for BabylonApi {
                     });
                     return scene;
                 }
-            "#,
+            "#
             ),
-            fn_create_scene: register_function(
+            fn_create_scene: js!(
                 r#"
                 function(selector){
                     var canvas = document.querySelector(selector);
@@ -99,9 +99,9 @@ impl Default for BabylonApi {
                     });
                     return scene;
                 }
-            "#,
+            "#
             ),
-            fn_create_sphere: register_function(
+            fn_create_sphere: js!(
                 r#"
                 function(scene,size){
                     return BABYLON.MeshBuilder.CreateSphere(
@@ -109,9 +109,9 @@ impl Default for BabylonApi {
                         { diameter: size },
                         scene);
                 }
-            "#,
+            "#
             ),
-            fn_create_cube: register_function(
+            fn_create_cube: js!(
                 r#"
                 function(scene,w,h,d){
                     return BABYLON.MeshBuilder.CreateBox(
@@ -119,139 +119,139 @@ impl Default for BabylonApi {
                         { height: h, width: w, depth: d },
                         scene);
                 }
-            "#,
+            "#
             ),
-            fn_create_standard_material: register_function(
+            fn_create_standard_material: js!(
                 r#"
                 function(scene){
                     return new BABYLON.StandardMaterial(null, scene);
                 }
-            "#,
+            "#
             ),
-            fn_dispose_mesh: register_function(
+            fn_dispose_mesh: js!(
                 r#"
                 function(mesh){
                     mesh.dispose()
                 }
-            "#,
+            "#
             ),
-            fn_log: register_function(
+            fn_log: js!(
                 r#"
                 function(msg){
                     console.log(msg);
                 }
-            "#,
+            "#
             ),
-            fn_error: register_function(
+            fn_error: js!(
                 r#"
                 function(msg){
                     console.error(msg);
                 }
-            "#,
+            "#
             ),
-            fn_debug: register_function(
+            fn_debug: js!(
                 r#"
                 function(){
                     debugger;
                 }
-            "#,
+            "#
             ),
-            fn_random: register_function(
+            fn_random: js!(
                 r#"
                 function(){
                     return Math.random();
                 }
-            "#,
+            "#
             ),
-            fn_set_position: register_function(
+            fn_set_position: js!(
                 r#"
                 function(mesh,x,y,z){
                     mesh.position = new BABYLON.Vector3(x,y,z);
                 }
-            "#,
+            "#
             ),
-            fn_set_scaling: register_function(
+            fn_set_scaling: js!(
                 r#"
                 function(mesh,x,y,z){
                     mesh.scaling = new BABYLON.Vector3(x,y,z);
                 }
-            "#,
+            "#
             ),
-            fn_set_material: register_function(
+            fn_set_material: js!(
                 r#"
                 function(mesh,mat){
                     mesh.material = mat;
                 }
-            "#,
+            "#
             ),
-            fn_set_emmisive_color: register_function(
+            fn_set_emmisive_color: js!(
                 r#"
                 function(mat,r,g,b){
                     mat.emissiveColor = new BABYLON.Color3(r, g, b);
                 }
-            "#,
+            "#
             ),
-            fn_set_diffuse_color: register_function(
+            fn_set_diffuse_color: js!(
                 r#"
                 function(mat,r,g,b){
                     mat.diffuseColor = new BABYLON.Color3(r, g, b);
                 }
-            "#,
+            "#
             ),
-            fn_set_specular_color: register_function(
+            fn_set_specular_color: js!(
                 r#"
                 function(mat,r,g,b){
                     mat.specularColor = new BABYLON.Color3(r, g, b);
                 }
-            "#,
+            "#
             ),
-            fn_set_ambient_color: register_function(
+            fn_set_ambient_color: js!(
                 r#"
                 function(mat,r,g,b){
                     mat.ambientColor = new BABYLON.Color3(r, g, b);
                 }
-            "#,
+            "#
             ),
-            fn_set_clear_color: register_function(
+            fn_set_clear_color: js!(
                 r#"
                 function(scene,r,g,b){
                     scene.clearColor = new BABYLON.Color3(r, g, b);
                 }
-            "#,
+            "#
             ),
-            fn_set_alpha: register_function(
+            fn_set_alpha: js!(
                 r#"
                 function(mat,a){
                     mat.alpha = a;
                 }
-            "#,
+            "#
             ),
-            fn_add_keyboard_observable: register_function(
+            fn_add_keyboard_observable: js!(
                 r#"
                 function(scene,cb){
                     scene.onKeyboardObservable.add((kbInfo) => {
                         cb(kbInfo.type,kbInfo.event.keyCode)
                     });
                 }
-            "#,
+            "#
             ),
-            fn_add_observable: register_function(
+            fn_add_observable: js!(
                 r#"
                 function(scene,name,cb){
                     scene[name].add(() => {
                         cb()
                     });
                 }
-            "#,
+            "#
             ),
-            fn_get_delta_time: register_function(
+            fn_get_delta_time: js!(
                 r#"
                 function(scene){
                     return scene.getEngine().getDeltaTime();
                 }
-            "#,
+            "#
             ),
-            fn_create_arc_rotate_camera: register_function(
+            fn_create_arc_rotate_camera: js!(
                 r#"
                 function(scene){
                     var camera = new BABYLON.ArcRotateCamera(
@@ -264,9 +264,9 @@ impl Default for BabylonApi {
                     );
                     return camera;
                 }
-            "#,
+            "#
             ),
-            fn_create_hemispheric_light: register_function(
+            fn_create_hemispheric_light: js!(
                 r#"
                 function(scene){
                     var light = new BABYLON.HemisphericLight(
@@ -276,9 +276,9 @@ impl Default for BabylonApi {
                     );
                     return light;
                 }
-            "#,
+            "#
             ),
-            fn_create_point_light: register_function(
+            fn_create_point_light: js!(
                 r#"
                 function(scene){
                     var light = new BABYLON.PointLight(
@@ -288,173 +288,167 @@ impl Default for BabylonApi {
                     );
                     return light;
                 }
-            "#,
+            "#
             ),
-            fn_create_gltf: register_function(
+            fn_create_gltf: js!(
                 r#"
                 function(scene,file){
                     var dummy = new BABYLON.Mesh(null, scene);
                     BABYLON.SceneLoader.ImportMesh(null, "", file, scene, function (newMeshes, particleSystems, skeletons) {
-                        for(v in newMeshes){
+                        for(let v in newMeshes){
                             var dude = newMeshes[v];
                             dude.parent = dummy;
                         }
                     });
                     return dummy;
                 }
-                "#,
+                "#
             ),
         }
     }
 }
 
 impl BabylonApi {
-    pub fn create_basic_scene(selector: &str) -> JSObject {
+    pub fn create_basic_scene(selector: &str) -> ExternRef {
         let api = globals::get::<BabylonApi>();
-        api.fn_create_basic_scene.invoke_1(selector).to_js_object()
+        api.fn_create_basic_scene.invoke_and_return_object(&[InvokeParam::String(selector)])
     }
-    pub fn create_scene(selector: &str) -> JSObject {
+    pub fn create_scene(selector: &str) -> ExternRef {
         let api = globals::get::<BabylonApi>();
-        api.fn_create_scene.invoke_1(selector).to_js_object()
+        api.fn_create_scene.invoke_and_return_object(&[InvokeParam::String(selector)])
     }
-    pub fn create_sphere(scene_ref: &JSObject, size: f64) -> JSObject {
+    pub fn create_sphere(scene_ref: &ExternRef, size: f64) -> ExternRef {
         let api = globals::get::<BabylonApi>();
         api.fn_create_sphere
-            .invoke_2(scene_ref, size)
-            .to_js_object()
+            .invoke_and_return_object(&[InvokeParam::ExternRef(scene_ref), InvokeParam::Float64(size)])
     }
 
-    pub fn create_cube(scene_ref: &JSObject, width: f64, height: f64, depth: f64) -> JSObject {
+    pub fn create_cube(scene_ref: &ExternRef, width: f64, height: f64, depth: f64) -> ExternRef {
         let api = globals::get::<BabylonApi>();
         api.fn_create_cube
-            .invoke_4(scene_ref, width, height, depth)
-            .to_js_object()
+            .invoke_and_return_object(&[InvokeParam::ExternRef(scene_ref), InvokeParam::Float64(width), InvokeParam::Float64(height), InvokeParam::Float64(depth)])
     }
 
-    pub fn create_standard_material(scene_ref: &JSObject) -> JSObject {
+    pub fn create_standard_material(scene_ref: &ExternRef) -> ExternRef {
         let api = globals::get::<BabylonApi>();
         api.fn_create_standard_material
-            .invoke_1(scene_ref)
-            .to_js_object()
+            .invoke_and_return_object(&[InvokeParam::ExternRef(scene_ref)])
     }
 
-    pub fn dispose_mesh(mesh: &JSObject) {
+    pub fn dispose_mesh(mesh: &ExternRef) {
         let api = globals::get::<BabylonApi>();
-        api.fn_dispose_mesh.invoke_1(mesh);
+        api.fn_dispose_mesh.invoke(&[InvokeParam::ExternRef(mesh)]);
     }
 
     pub fn log(msg: &str) {
         let api = globals::get::<BabylonApi>();
-        api.fn_log.invoke_1(msg);
+        api.fn_log.invoke(&[InvokeParam::String(msg)]);
     }
 
     pub fn error(msg: &str) {
         let api = globals::get::<BabylonApi>();
-        api.fn_error.invoke_1(msg);
+        api.fn_error.invoke(&[InvokeParam::String(msg)]);
     }
 
     pub fn debugger() {
         let api = globals::get::<BabylonApi>();
-        api.fn_debug.invoke_0();
+        api.fn_debug.invoke(&[]);
     }
 
     pub fn random() -> f64 {
         let api = globals::get::<BabylonApi>();
-        api.fn_random.invoke_0()
+        api.fn_random.invoke(&[])
     }
 
-    pub fn set_position(mesh: &JSObject, x: f64, y: f64, z: f64) {
+    pub fn set_position(mesh: &ExternRef, x: f64, y: f64, z: f64) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_position.invoke_4(mesh, x, y, z);
+        api.fn_set_position.invoke(&[InvokeParam::ExternRef(mesh), InvokeParam::Float64(x), InvokeParam::Float64(y), InvokeParam::Float64(z)]);
     }
 
-    pub fn set_scaling(mesh: &JSObject, x: f64, y: f64, z: f64) {
+    pub fn set_scaling(mesh: &ExternRef, x: f64, y: f64, z: f64) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_scaling.invoke_4(mesh, x, y, z);
+        api.fn_set_scaling.invoke(&[InvokeParam::ExternRef(mesh), InvokeParam::Float64(x), InvokeParam::Float64(y), InvokeParam::Float64(z)]);
     }
 
-    pub fn set_material(mesh: &JSObject, mat: &JSObject) {
+    pub fn set_material(mesh: &ExternRef, mat: &ExternRef) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_material.invoke_2(mesh, mat);
+        api.fn_set_material.invoke(&[InvokeParam::ExternRef(mesh), InvokeParam::ExternRef(mat)]);
     }
 
-    pub fn set_emmisive_color(mat: &JSObject, r: f64, g: f64, b: f64) {
+    pub fn set_emmisive_color(mat: &ExternRef, r: f64, g: f64, b: f64) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_emmisive_color.invoke_4(mat, r, g, b);
+        api.fn_set_emmisive_color.invoke(&[InvokeParam::ExternRef(mat), InvokeParam::Float64(r), InvokeParam::Float64(g), InvokeParam::Float64(b)]);
     }
 
-    pub fn set_diffuse_color(mat: &JSObject, r: f64, g: f64, b: f64) {
+    pub fn set_diffuse_color(mat: &ExternRef, r: f64, g: f64, b: f64) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_diffuse_color.invoke_4(mat, r, g, b);
+        api.fn_set_diffuse_color.invoke(&[InvokeParam::ExternRef(mat), InvokeParam::Float64(r), InvokeParam::Float64(g), InvokeParam::Float64(b)]);
     }
 
-    pub fn set_specular_color(mat: &JSObject, r: f64, g: f64, b: f64) {
+    pub fn set_specular_color(mat: &ExternRef, r: f64, g: f64, b: f64) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_specular_color.invoke_4(mat, r, g, b);
+        api.fn_set_specular_color.invoke(&[InvokeParam::ExternRef(mat), InvokeParam::Float64(r), InvokeParam::Float64(g), InvokeParam::Float64(b)]);
     }
 
-    pub fn set_ambient_color(mat: &JSObject, r: f64, g: f64, b: f64) {
+    pub fn set_ambient_color(mat: &ExternRef, r: f64, g: f64, b: f64) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_ambient_color.invoke_4(mat, r, g, b);
+        api.fn_set_ambient_color.invoke(&[InvokeParam::ExternRef(mat), InvokeParam::Float64(r), InvokeParam::Float64(g), InvokeParam::Float64(b)]);
     }
 
-    pub fn set_clear_color(mat: &JSObject, r: f64, g: f64, b: f64) {
+    pub fn set_clear_color(mat: &ExternRef, r: f64, g: f64, b: f64) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_clear_color.invoke_4(mat, r, g, b);
+        api.fn_set_clear_color.invoke(&[InvokeParam::ExternRef(mat), InvokeParam::Float64(r), InvokeParam::Float64(g), InvokeParam::Float64(b)]);
     }
 
-    pub fn set_alpha(mat: &JSObject, a: f64) {
+    pub fn set_alpha(mat: &ExternRef, a: f64) {
         let api = globals::get::<BabylonApi>();
-        api.fn_set_alpha.invoke_2(mat, a);
+        api.fn_set_alpha.invoke(&[InvokeParam::ExternRef(mat), InvokeParam::Float64(a)]);
     }
 
     pub fn add_keyboard_observable(
-        scene: &JSObject,
-        callback: Box<dyn FnMut(JSValue, JSValue) -> () + Send>,
+        scene: &ExternRef,
+        callback: Box<dyn FnMut(f64, f64) -> () + Send>,
     ) {
-        let cb = create_callback_2(callback);
+        /*let cb = callback;
         let api = globals::get::<BabylonApi>();
-        api.fn_add_keyboard_observable.invoke_2(scene, cb);
+        api.fn_add_keyboard_observable.invoke(&[InvokeParam::ExternRef(scene), InvokeParam::ExternRef(cb)]);*/
     }
 
     pub fn add_observable(
-        scene: &JSObject,
+        scene: &ExternRef,
         observable_name: &str,
         callback: Box<dyn FnMut() -> () + Send>,
     ) {
-        let cb = create_callback_0(callback);
+        /*let cb = create_callback(callback);
         let api = globals::get::<BabylonApi>();
-        api.fn_add_observable.invoke_3(scene, observable_name, cb);
+        api.fn_add_observable.invoke(&[InvokeParam::ExternRef(scene), InvokeParam::String(observable_name),  cb]);*/
     }
 
-    pub fn get_delta_time(scene: &JSObject) -> f64 {
+    pub fn get_delta_time(scene: &ExternRef) -> f64 {
         let api = globals::get::<BabylonApi>();
-        api.fn_get_delta_time.invoke_1(scene)
+        api.fn_get_delta_time.invoke(&[InvokeParam::ExternRef(scene)])
     }
 
-    pub fn create_arc_rotate_camera(scene: &JSObject) -> JSObject {
+    pub fn create_arc_rotate_camera(scene: &ExternRef) -> ExternRef {
         let api = globals::get::<BabylonApi>();
         api.fn_create_arc_rotate_camera
-            .invoke_1(scene)
-            .to_js_object()
+            .invoke_and_return_object(&[InvokeParam::ExternRef(scene)])
     }
 
-    pub fn create_hemispheric_light(scene: &JSObject) -> JSObject {
+    pub fn create_hemispheric_light(scene: &ExternRef) -> ExternRef {
         let api = globals::get::<BabylonApi>();
         api.fn_create_hemispheric_light
-            .invoke_1(scene)
-            .to_js_object()
+            .invoke_and_return_object(&[InvokeParam::ExternRef(scene)])
     }
 
-    pub fn create_point_light(scene: &JSObject) -> JSObject {
+    pub fn create_point_light(scene: &ExternRef) -> ExternRef {
         let api = globals::get::<BabylonApi>();
-        api.fn_create_point_light.invoke_1(scene).to_js_object()
+        api.fn_create_point_light.invoke_and_return_object(&[InvokeParam::ExternRef(scene)])
     }
 
-    pub fn create_gltf(scene: &JSObject, file: &str) -> JSObject {
+    pub fn create_gltf(scene: &ExternRef, file: &str) -> ExternRef {
         let api = globals::get::<BabylonApi>();
         api.fn_create_gltf
-            .invoke_2(scene, file)
-            .to_js_object()
+            .invoke_and_return_object(&[InvokeParam::ExternRef(scene), InvokeParam::String(file)])
     }
 }
