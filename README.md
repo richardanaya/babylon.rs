@@ -10,7 +10,7 @@ This project is pre-alpha and the api is in active exploration. Current prioriti
 * get a camera
 * get some sort of interaction
 
-This project uses [`js_ffi`](https://github.com/richardanaya/js_ffi) for javascript binding and [`lazy_static`](https://github.com/rust-lang-nursery/lazy-static.rs) for global static singletons fairly extensively.
+This project uses [`web`](https://github.com/richardanaya/web.rs) for javascript binding and [`lazy_static`](https://github.com/rust-lang-nursery/lazy-static.rs) for global static singletons fairly extensively.
 
 # Idioms
 * Scenes hold 3D objects
