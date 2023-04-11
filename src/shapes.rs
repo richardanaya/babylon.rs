@@ -72,7 +72,6 @@ impl Sphere {
 impl Drop for Sphere {
     fn drop(&mut self) {
         BabylonApi::dispose_mesh(&mut self.js_ref);
-        //release_object(&self.js_ref)
     }
 }
 
@@ -139,7 +138,6 @@ impl Cube {
 impl Drop for Cube {
     fn drop(&mut self) {
         BabylonApi::dispose_mesh(&mut self.js_ref);
-        //release_object(&self.js_ref)
     }
 }
 
@@ -204,6 +202,5 @@ impl GLTF {
 impl Drop for GLTF {
     fn drop(&mut self) {
         BabylonApi::dispose_mesh(&mut self.js_ref);
-        //release_object(&self.js_ref)
     }
 }

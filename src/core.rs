@@ -59,9 +59,3 @@ impl Scene {
         BabylonApi::set_clear_color(self.get_js_ref(), c.x, c.y, c.z);
     }
 }
-
-impl Drop for Scene {
-    fn drop(&mut self) {
-        //release_object(&self.scene_ref)
-    }
-}
