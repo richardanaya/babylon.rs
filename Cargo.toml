@@ -10,7 +10,8 @@ repository = "https://github.com/richardanaya/babylon"
 readme="README.md"
 
 [dependencies]
-js_ffi = "0.8.0"
 lazy_static = "1.4.0"
 globals = "1.0.1"
-nalgebra = "0.18"
+nalgebra = "0.32.2"
+web = "0.2.12"
+js = "0.5.7"

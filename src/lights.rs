@@ -1,9 +1,9 @@
 use crate::api::BabylonApi;
 use crate::core::Scene;
-use js_ffi::*;
+use web::*;
 
 pub struct HemisphericLight {
-    _js_ref: JSObject,
+    _js_ref: ExternRef,
 }
 
 impl HemisphericLight {
@@ -15,7 +15,7 @@ impl HemisphericLight {
 }
 
 pub struct PointLight {
-    _js_ref: JSObject,
+    _js_ref: ExternRef,
 }
 
 impl PointLight {

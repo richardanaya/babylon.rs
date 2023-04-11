@@ -54,31 +54,31 @@ impl BasicGame for Game {
         let bp = self.ball.get_position();
 
         // move ball
-        let b_x = self.ball_dir.x * delta_time + bp.x;
-        let b_y = self.ball_dir.y * delta_time + bp.y;
+        let mut b_x = self.ball_dir.x * delta_time + bp.x;
+        let mut b_y = self.ball_dir.y * delta_time + bp.y;
         if b_x > 0.5 || b_x < -0.5 {
             self.ball_dir.x = -self.ball_dir.x;
         }
-
         if b_y > 0.75 || b_y < -0.75 {
-            self.ball.set_position(Vector::new(0.0, 0.0, 0.0));
+            // Reset ball if outside play area
+            b_x = 0.0;
+            b_y = 0.0;
             self.ball_dir.x = babylon::js::random() - 0.5;
             self.ball_dir.y = -self.ball_dir.y;
-        } else if b_y > 0.45 || (b_y < -0.45 && b_x <= p2.x + 0.25 && b_x >= p2.x - 0.25) {
+        } else if b_y > 0.45 || (b_y < -0.45 && b_y > -0.55 && b_x <= p2.x + 0.25 && b_x >= p2.x - 0.25) {
+            // Hit paddle (top paddle is assumed to always hit)
             self.ball_dir.y = -self.ball_dir.y;
-            self.ball.set_position(Vector::new(b_x, b_y, 0.0));
-        } else {
-            self.ball.set_position(Vector::new(b_x, b_y, 0.0));
+            b_y = if b_y > 0.0 { 0.44 } else { -0.44 };
         }
-
+        
+        self.ball.set_position(Vector::new(b_x, b_y, 0.0));
+        
         // move opponent paddle to match ball
         self.paddle_1.set_position_x(b_x);
 
         // move paddle if it has velocity
-        if self.paddle_dir != 0.0 {
-            let p2_x = p2.x + delta_time * self.paddle_dir;
-            self.paddle_2.set_position_x(p2_x)
-        }
+        let p2_x = p2.x + delta_time * self.paddle_dir;
+        self.paddle_2.set_position_x(p2_x);
     }
 
     fn key_up(&mut self, _key_code: f64) {
@@ -86,10 +86,10 @@ impl BasicGame for Game {
     }
 
     fn key_down(&mut self, key_code: f64) {
-        if key_code == 37.0 {
-            self.paddle_dir = 1.0;
-        } else if key_code == 39.0 {
-            self.paddle_dir = -1.0;
+        match key_code {
+            37.0 => self.paddle_dir = 1.0,
+            39.0 => self.paddle_dir = -1.0,
+            _ => {}
         }
     }
 }

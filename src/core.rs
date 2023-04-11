@@ -1,12 +1,11 @@
 use crate::api::BabylonApi;
 use crate::math::*;
-use alloc::boxed::Box;
-use js_ffi::*;
+use web::*;
 
 pub struct Scene {
     ambient_color: Color,
     clear_color: Color,
-    scene_ref: JSObject,
+    scene_ref: ExternRef,
 }
 
 impl Scene {
@@ -28,25 +27,21 @@ impl Scene {
         }
     }
 
-    pub fn get_js_ref(&self) -> &JSObject {
+    pub fn get_js_ref(&self) -> &ExternRef {
         &self.scene_ref
     }
 
-    pub fn add_keyboard_observable<T>(&self, callback: T)
-    where
-        T: 'static + FnMut(JSValue, JSValue) -> () + Send,
+    pub fn add_keyboard_observable(&self, callback: &str)
     {
-        BabylonApi::add_keyboard_observable(&self.scene_ref, Box::new(callback));
+        BabylonApi::add_keyboard_observable(&self.scene_ref, callback);
     }
 
-    pub fn add_before_render_observable<T>(&self, callback: T)
-    where
-        T: 'static + FnMut() -> () + Send,
+    pub fn add_before_render_observable(&self, callback: &str)
     {
         BabylonApi::add_observable(
             &self.scene_ref,
             "onBeforeRenderObservable",
-            Box::new(callback),
+            callback,
         );
     }
 
@@ -62,11 +57,5 @@ impl Scene {
     pub fn set_clear_color(&mut self, c: Color) {
         self.clear_color = c;
         BabylonApi::set_clear_color(self.get_js_ref(), c.x, c.y, c.z);
-    }
-}
-
-impl Drop for Scene {
-    fn drop(&mut self) {
-        release_object(&self.scene_ref)
     }
 }

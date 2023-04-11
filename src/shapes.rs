@@ -2,11 +2,11 @@ use crate::api::BabylonApi;
 use crate::core::*;
 use crate::materials::*;
 use crate::math::*;
-use js_ffi::*;
+use web::*;
 
 pub struct Sphere {
     position: Vector3<f64>,
-    js_ref: JSObject,
+    js_ref: ExternRef,
 }
 
 impl Sphere {
@@ -72,13 +72,12 @@ impl Sphere {
 impl Drop for Sphere {
     fn drop(&mut self) {
         BabylonApi::dispose_mesh(&mut self.js_ref);
-        release_object(&self.js_ref)
     }
 }
 
 pub struct Cube {
     position: Vector3<f64>,
-    js_ref: JSObject,
+    js_ref: ExternRef,
 }
 
 impl Cube {
@@ -139,13 +138,12 @@ impl Cube {
 impl Drop for Cube {
     fn drop(&mut self) {
         BabylonApi::dispose_mesh(&mut self.js_ref);
-        release_object(&self.js_ref)
     }
 }
 
 pub struct GLTF {
     position: Vector3<f64>,
-    js_ref: JSObject,
+    js_ref: ExternRef,
 }
 
 impl GLTF {
@@ -204,6 +202,5 @@ impl GLTF {
 impl Drop for GLTF {
     fn drop(&mut self) {
         BabylonApi::dispose_mesh(&mut self.js_ref);
-        release_object(&self.js_ref)
     }
 }

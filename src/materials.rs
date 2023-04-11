@@ -1,14 +1,14 @@
 use crate::api::BabylonApi;
 use crate::core::*;
 use crate::math::*;
-use js_ffi::*;
+use web::*;
 
 pub trait Material {
-    fn get_js_ref(&self) -> &JSObject;
+    fn get_js_ref(&self) -> &ExternRef;
 }
 
 pub struct StandardMaterial {
-    js_ref: JSObject,
+    js_ref: ExternRef,
     diffuse_color: Color,
     specular_color: Color,
     emmisive_color: Color,
@@ -55,7 +55,7 @@ impl StandardMaterial {
 }
 
 impl Material for StandardMaterial {
-    fn get_js_ref(&self) -> &JSObject {
+    fn get_js_ref(&self) -> &ExternRef {
         return &self.js_ref;
     }
 }
